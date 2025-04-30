@@ -1,0 +1,134 @@
+/* Reset 一些基本樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("../Assets/image/index/TestBackGroundA.png"); /* 背景圖片路徑 */
+    background-repeat: no-repeat;
+    background-size: cover;           /* 確保填滿整個畫面 */
+    background-position: center right;/* 靠右對齊，搭配右黑設計 */
+    background-attachment: fixed;     /* 滾動時固定背景（可選） */
+}
+
+/* 導覽列整體 */
+.navbar {
+    width: 100%;
+    background-color: #313131;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Logo 或標題 */
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+/* 圖片樣式（固定為正方形） */
+.logo-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px; /* 可選，讓圖片微微圓角 */
+}
+
+/* 導覽連結區 */
+.navbar .nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.navbar .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.navbar .nav-links a:hover {
+    color: #ffd369;
+}
+
+/* 響應式調整（手機版） */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+}
+
+/*----------------------------介紹文字-------------------------------*/
+
+/* Hero 文字區塊 */
+.hero-text {
+    position: absolute;
+    top: 350%;
+    right: 2%;
+    transform: translateY(-50%);
+    max-width: 40%;
+    color: white;
+    z-index: 10;
+}
+
+/* 標題樣式 */
+.hero-text h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* 介紹文字樣式 */
+.hero-text p {
+    font-size: 1.125rem;
+    line-height: 1.6;
+}
+
+.fade {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.fade.show {
+    opacity: 1;
+}
+
+/* 響應式調整（手機版） */
+@media (max-width: 768px) {
+    .hero-text {
+        position: static;
+        padding: 2rem;
+        max-width: 100%;
+        transform: none;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.7); /* 手機上加底色以利閱讀 */
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+}
+
