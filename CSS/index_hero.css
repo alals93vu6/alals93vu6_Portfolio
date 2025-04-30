@@ -8,7 +8,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url("/Assets/image/index/TestBackGroundA.png");
+    background-image: url("../Assets/image/index/TestBackGroundA.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: right center;
