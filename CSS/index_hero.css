@@ -104,7 +104,7 @@ body {
     padding-left: 2rem;
     box-sizing: border-box;
     margin-left: 60%;
-    /*background-color: red;*/
+   /* background-color: red;*/
 }
 
 /* HERO 文字內容 */
@@ -125,6 +125,23 @@ body {
 .hero-text p {
     font-size: 1.5rem;
     line-height: 1.6;
+}
+
+.more-link {
+  position: absolute;
+  bottom: 3rem;
+  right: 7rem;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.more-link:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
 /* 淡入動畫 */
