@@ -8,11 +8,12 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url("../Assets/image/index/TestBackGroundA.png"); /* 背景圖片路徑 */
+    background-image: url("../Assets/image/index/TestBackGroundA.png");
     background-repeat: no-repeat;
-    background-size: cover;           /* 確保填滿整個畫面 */
-    background-position: center right;/* 靠右對齊，搭配右黑設計 */
-    background-attachment: fixed;     /* 滾動時固定背景（可選） */
+    background-size: cover;
+    background-position: right center;
+    background-attachment: fixed;
+    overflow-x: hidden;
 }
 
 /* 導覽列整體 */
@@ -79,30 +80,40 @@ body {
 
 /*----------------------------介紹文字-------------------------------*/
 
-/* Hero 文字區塊 */
+/* HERO 外框，負責對齊與定位 */
+.hero-wrapper {
+    width: 35vw;
+    height: 80vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 2rem;
+    box-sizing: border-box;
+    margin-left: 60%;
+    /*background-color: red;*/
+}
+
+/* HERO 文字內容 */
 .hero-text {
-    position: absolute;
-    top: 350%;
-    right: 2%;
-    transform: translateY(-50%);
-    max-width: 40%;
+    max-width: 100%;
     color: white;
+    text-align: left;
     z-index: 10;
 }
 
-/* 標題樣式 */
+/* 標題與段落 */
 .hero-text h1 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: bold;
     margin-bottom: 1rem;
 }
 
-/* 介紹文字樣式 */
 .hero-text p {
-    font-size: 1.125rem;
+    font-size: 1.5rem;
     line-height: 1.6;
 }
 
+/* 淡入動畫 */
 .fade {
     opacity: 0;
     transition: opacity 0.6s ease;
@@ -112,15 +123,17 @@ body {
     opacity: 1;
 }
 
-/* 響應式調整（手機版） */
+/* 響應式處理 */
 @media (max-width: 768px) {
-    .hero-text {
-        position: static;
+    .hero-wrapper {
+        justify-content: center;
         padding: 2rem;
+    }
+
+    .hero-text {
         max-width: 100%;
-        transform: none;
         text-align: center;
-        background-color: rgba(0, 0, 0, 0.7); /* 手機上加底色以利閱讀 */
+        background-color: rgba(0, 0, 0, 0.7); /* 手機用背景改善對比 */
     }
 
     .hero-text h1 {
