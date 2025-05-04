@@ -1,0 +1,9 @@
+#profileSection {
+    position: relative;
+    width: 100%;
+    min-height: 120vh;
+    padding: 2rem 1rem;
+    background-color: rgb(17, 17, 17);
+  }
+
+  
