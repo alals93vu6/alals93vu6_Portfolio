@@ -17,6 +17,12 @@ body {
     overflow-x: hidden;
 }
 
+#HEROpage {
+    height: 100vh; /* 強制全螢幕滿版 */
+    width: 100%;
+    position: relative;
+  }
+
 .bg-mask {
     position: fixed;
     top: 0;
@@ -129,7 +135,7 @@ body {
 
 .more-link {
   position: absolute;
-  bottom: 3rem;
+  bottom: 8rem;
   right: 7rem;
   color: rgb(255, 255, 255);
   text-decoration: none;
