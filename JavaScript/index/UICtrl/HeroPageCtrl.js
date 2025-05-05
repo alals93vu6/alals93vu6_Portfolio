@@ -14,7 +14,7 @@ export async function StartAnimator() {
 
     setTimeout(function () {
         SwitchPageAnimator();
-    }, 3000);//20000
+    }, 20000);//20000
 }
 
 async function SwitchPageAnimator() {
