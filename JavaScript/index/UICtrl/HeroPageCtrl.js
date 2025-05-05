@@ -7,7 +7,7 @@ export async function StartAnimator() {
     document.getElementsByClassName("bg-mask")[0].style.opacity = 0;
     await delay(1000);
     document.getElementById("hero-title").style.opacity = 1;
-    await delay(300);
+    await delay(400);
     document.getElementById("hero-desc").style.opacity = 1;
     await delay(500);
     document.getElementsByClassName("more-link")[0].style.opacity = 0.8;
@@ -19,7 +19,7 @@ export async function StartAnimator() {
 
 async function SwitchPageAnimator() {
     document.getElementsByClassName("more-link")[0].style.opacity = 0;
-    await delay(300);
+    await delay(200);
     document.getElementById("hero-desc").style.opacity = 0;
     await delay(150);
     document.getElementById("hero-title").style.opacity = 0;
@@ -30,7 +30,7 @@ async function SwitchPageAnimator() {
     document.getElementsByClassName("bg-mask")[0].style.opacity = 0;
     await delay(1000);
     document.getElementById("hero-title").style.opacity = 1;
-    await delay(300);
+    await delay(400);
     document.getElementById("hero-desc").style.opacity = 1;
     await delay(500);
     document.getElementsByClassName("more-link")[0].style.opacity = 0.8;
@@ -54,7 +54,7 @@ function HeroPageDetected() {
 function IntroduceDetected(page) {
     switch (page) {
         case 1:
-            document.getElementById("hero-title").innerHTML = "賽芙拉";
+            document.getElementById("hero-title").innerHTML = "賽芙拉_測試1";
             document.getElementById("hero-desc").innerHTML =
                 `
             　　我的大學畢業製作專題是一款結合時間壓力的「反應型回合制」遊戲！<br><br>
@@ -66,7 +66,7 @@ function IntroduceDetected(page) {
             `;
             break;
         case 2:
-            document.getElementById("hero-title").innerHTML = "海島戀歌";
+            document.getElementById("hero-title").innerHTML = "海島戀歌_測試1";
             document.getElementById("hero-desc").innerHTML = 
             `
             　　這是一款由一名程式與一名美術共同於下班時間開發的獨立 Galgame！<br><br>
