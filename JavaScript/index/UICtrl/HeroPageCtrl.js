@@ -43,10 +43,10 @@ async function SwitchPageAnimator() {
 function HeroPageDetected() {
     if (pageNumber == 1) {
         pageNumber++;
-        document.body.style.backgroundImage = "url('../../Assets/image/index/HeroPage_BackGroundB.png')";
+        document.body.style.backgroundImage = "url('/Assets/image/index/HeroPage_BackGroundB.png')";
     } else {
         pageNumber = 1;
-        document.body.style.backgroundImage = "url('../../Assets/image/index/HeroPage_BackGroundA.png')";
+        document.body.style.backgroundImage = "url('/Assets/image/index/HeroPage_BackGroundA.png')";
     }
     IntroduceDetected(pageNumber);
 }
