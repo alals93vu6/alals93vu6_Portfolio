@@ -19,8 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
       window.addEventListener("scroll", () => {
         if (window.scrollY > 200) {
           backBtn.style.opacity = 1;
+          backBtn.style.pointerEvents = "auto";
         } else {
           backBtn.style.opacity = 0;
+          backBtn.style.pointerEvents = "none";
         }
       });
   
