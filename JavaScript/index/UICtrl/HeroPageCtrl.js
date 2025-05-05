@@ -43,10 +43,10 @@ async function SwitchPageAnimator() {
 function HeroPageDetected() {
     if (pageNumber == 1) {
         pageNumber++;
-        document.body.style.backgroundImage = "url('/Assets/image/index/HeroPage_BackGroundB.png')";
+        document.body.style.backgroundImage = "url('Assets/image/index/HeroPage_BackGroundB.png')";
     } else {
         pageNumber = 1;
-        document.body.style.backgroundImage = "url('/Assets/image/index/HeroPage_BackGroundA.png')";
+        document.body.style.backgroundImage = "url('Assets/image/index/HeroPage_BackGroundA.png')";
     }
     IntroduceDetected(pageNumber);
 }
@@ -54,7 +54,7 @@ function HeroPageDetected() {
 function IntroduceDetected(page) {
     switch (page) {
         case 1:
-            document.getElementById("hero-title").innerHTML = "賽芙拉_測試1";
+            document.getElementById("hero-title").innerHTML = "賽芙拉_測試2";
             document.getElementById("hero-desc").innerHTML =
                 `
             　　我的大學畢業製作專題是一款結合時間壓力的「反應型回合制」遊戲！<br><br>
@@ -66,7 +66,7 @@ function IntroduceDetected(page) {
             `;
             break;
         case 2:
-            document.getElementById("hero-title").innerHTML = "海島戀歌_測試1";
+            document.getElementById("hero-title").innerHTML = "海島戀歌_測試2";
             document.getElementById("hero-desc").innerHTML = 
             `
             　　這是一款由一名程式與一名美術共同於下班時間開發的獨立 Galgame！<br><br>
