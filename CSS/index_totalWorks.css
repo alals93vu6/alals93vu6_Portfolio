@@ -1,0 +1,65 @@
+#totalWorks {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  padding: 2rem 1rem;
+  background-color: rgb(25, 25, 25);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.works-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  height: 70vh;
+  gap: 10px;
+}
+
+.work-block {
+  flex: 1;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%);
+  transition: all 0.5s ease;
+  cursor: pointer;
+  opacity: 0.8;
+  filter: brightness(0.8);
+}
+
+.works-container:hover .work-block {
+  flex: 1;
+  opacity: 0.6;
+  filter: brightness(0.5);
+}
+
+.works-container:hover .work-block:hover {
+  flex: 2;
+  opacity: 1;
+  filter: brightness(1);
+  z-index: 1;
+}
+
+/* 各分類背景可自行換圖 */
+.work-block.spine {
+  background-image: url("../Assets/image/index/SpineTest.png");
+}
+
+.work-block.web {
+  background-image: url("../Assets/image/index/webtest.png");
+}
+
+.work-block.unity {
+  background-image: url("../Assets/image/index/unitytest.png");
+}
