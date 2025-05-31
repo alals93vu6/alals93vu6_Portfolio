@@ -15,14 +15,16 @@ async function onScrollFadeIn() {
 
     if (!hasAnimated && targetTop < triggerY) {
         hasAnimated = true;
-        fadeInElement(radarBase,3);
+        radarBase.style.opacity = '1';
+        radarBase.style.transform = 'translateY(0%)';
+        
         await delay(1000);
-        fadeInElement(radarFill,0.5);
+        fadeInElement(radarFill, 0.5);
         window.removeEventListener('scroll', onScrollFadeIn);
     }
 }
 
-function fadeInElement(element,Scend) {
+function fadeInElement(element, Scend) {
     if (!element) return;
     var Scendtime = `opacity ${Scend}s ease-out`;
     element.style.transition = Scendtime;
