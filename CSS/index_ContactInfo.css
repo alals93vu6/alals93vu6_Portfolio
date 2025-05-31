@@ -1,0 +1,53 @@
+#ContactInfo {
+  position: relative;
+  width: 100%;
+  min-height: 20vh;
+  padding: 2rem 1rem;
+  background-color: rgb(65, 65, 65);
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5vw;
+  flex-wrap: wrap;
+  color: white;
+}
+
+.contact-box {
+  flex: 1 1 300px;
+}
+
+.contact-box h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  color: white;
+}
+
+.contact-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-box li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  font-size: 1rem;
+}
+
+.contact-box li img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-right: 0.5rem;
+  filter: brightness(1.1);
+}
+
+.contact-box a {
+  color: #cdeaff;
+  text-decoration: none;
+}
+
+.contact-box a:hover {
+  text-decoration: underline;
+}
