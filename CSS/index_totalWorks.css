@@ -6,8 +6,10 @@
   background-color: rgb(17, 17, 17);
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  gap: 2rem;
 }
 
 .works-container {
@@ -78,24 +80,37 @@
   background-color: rgba(0,0,0,0.3);
 }
 
+.works-title {
+  color: white;
+  text-align: center;
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 0 auto 2rem auto;
+  font-family: 'Noto Sans TC', sans-serif;
+  width: 100%;
+
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  letter-spacing: 2px;
+}
+
 /* 🎨 專屬圖設定：可換成你的圖檔路徑 */
 .spine-cover {
-  background-image: url("../Assets/image/index/SpineTest.png");
+  background-image: url("../Assets/image/index/SpinePage.png");
 }
 .spine-hover {
   background-image: url("../Assets/image/index/spine_GIF_TEST.gif");
 }
 
 .web-cover {
-  background-image: url("../Assets/image/index/webtest.png");
+  background-image: url("../Assets/image/index/webPage.png");
 }
 .web-hover {
   background-image: url("../Assets/image/index/WEB_GIF_TEST.gif");
 }
 
 .unity-cover {
-  background-image: url("../Assets/image/index/unitytest.png");
+  background-image: url("../Assets/image/index/UnityPage.png");
 }
 .unity-hover {
-  background-image: url("../Assets/image/index/unity_GIF_TEST.gif");
+  background-image: url("../Assets/image/index/UnityPage_GIF3.gif");
 }
