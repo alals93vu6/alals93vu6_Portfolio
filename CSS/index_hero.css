@@ -1,4 +1,5 @@
 /* Reset 一些基本樣式 */
+
 * {
     margin: 0;
     padding: 0;
@@ -96,6 +97,12 @@ body {
         gap: 1rem;
         margin-top: 1rem;
     }
+
+    body {
+        background-position: center top;  /* ↔ 讓圖片偏上居中顯示 */
+        background-attachment: scroll;    /* ↔ 避免手機上 fixed 無效或抖動 */
+        background-size: cover;           /* ↔ 保留填滿但不拉爆畫質 */
+    }
 }
 
 /*----------------------------介紹文字-------------------------------*/
@@ -162,32 +169,43 @@ body {
 
 /* 響應式處理 */
 @media (max-width: 768px) {
-    .hero-wrapper {
-        justify-content: center;
-        padding: 2rem;
-        margin-left: 0;       /* ← 加這行就穩住了 */
-        width: 100vw;         /* ← 加這行會讓手機寬度撐滿 */
-    }
+  .hero-wrapper {
+    justify-content: center;
+    padding: 2rem;
+    margin-left: 0;
+    width: 100vw;
+  }
 
-    .hero-text {
-        max-width: 100%;
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 1rem;        /* ← 補點內距讓字不貼邊 */
-    }
+  .hero-text {
+    max-width: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    box-sizing: border-box;
+  }
 
-    .hero-text h1 {
-        font-size: 2rem;
-    }
+  .hero-text h1 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
 
-    .hero-text p {
-        font-size: 1rem;
-    }
+  .hero-text p {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    line-height: 1.6;
+  }
 
-    .more-link {
-        position: static;     /* ← 改為正常排版 */
-        margin-top: 1.5rem;
-        display: inline-block;
-    }
+  .more-link {
+    position: static;
+    margin-top: 1.5rem;
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
 }
+
 
