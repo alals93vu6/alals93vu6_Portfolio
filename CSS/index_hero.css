@@ -165,12 +165,15 @@ body {
     .hero-wrapper {
         justify-content: center;
         padding: 2rem;
+        margin-left: 0;       /* ← 加這行就穩住了 */
+        width: 100vw;         /* ← 加這行會讓手機寬度撐滿 */
     }
 
     .hero-text {
         max-width: 100%;
         text-align: center;
-        background-color: rgba(0, 0, 0, 0.7); /* 手機用背景改善對比 */
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 1rem;        /* ← 補點內距讓字不貼邊 */
     }
 
     .hero-text h1 {
@@ -179,6 +182,12 @@ body {
 
     .hero-text p {
         font-size: 1rem;
+    }
+
+    .more-link {
+        position: static;     /* ← 改為正常排版 */
+        margin-top: 1.5rem;
+        display: inline-block;
     }
 }
 
