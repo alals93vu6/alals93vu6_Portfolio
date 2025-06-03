@@ -56,8 +56,15 @@
 }
 
 .bg-hover {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   z-index: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
 }
 
 .work-block:hover .bg-hover {
@@ -111,6 +118,6 @@
 .unity-cover {
   background-image: url("../Assets/image/index/UnityPage.png");
 }
-.unity-hover {
+/* .unity-hover {
   background-image: url("../Assets/image/index/UnityPage_GIF3.gif");
-}
+} */
