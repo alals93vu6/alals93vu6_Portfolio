@@ -104,16 +104,16 @@
 .spine-cover {
   background-image: url("../Assets/image/index/SpinePage.png");
 }
-.spine-hover {
+/* .spine-hover {
   background-image: url("../Assets/image/index/spine_GIF_TEST.gif");
-}
+} */
 
 .web-cover {
   background-image: url("../Assets/image/index/webPage.png");
 }
-.web-hover {
+/* .web-hover {
   background-image: url("../Assets/image/index/WEB_GIF_TEST.gif");
-}
+} */
 
 .unity-cover {
   background-image: url("../Assets/image/index/UnityPage.png");
