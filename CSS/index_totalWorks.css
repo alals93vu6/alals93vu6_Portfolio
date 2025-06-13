@@ -45,6 +45,8 @@
   z-index: 1;
 }
 
+
+
 /* 封面與 Hover 圖層 */
 .bg-cover, .bg-hover {
   position: absolute;
@@ -65,6 +67,7 @@
   z-index: 0;
   transition: opacity 0.5s ease;
   pointer-events: none;
+  filter: none !important;
 }
 
 .work-block:hover .bg-hover {
