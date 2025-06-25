@@ -47,11 +47,11 @@
         </div>
     </div>
 
-    <div id="totalWorks">
+    <div id="totalWorks" class="scroll-anchor">
         <h1 class="works-title">作品瀏覽</h1>
         <div class="works-container">
 
-            <a href="Portfolio_spine.html" target="_blank" class="work-block spine">
+            <a href="Portfolio_spine.html" class="work-block spine">
                 <div class="bg-cover spine-cover"></div>
                 <video class="bg-hover unity-hover" autoplay loop muted playsinline>
                     <source src="Assets/image/index/aubotMePage.webm" type="video/webm">
@@ -59,7 +59,7 @@
                 <div class="label"></div>
             </a>
 
-            <a href="Portfolio_unity.html" target="_blank" class="work-block unity">
+            <a href="Portfolio_unity.html" class="work-block unity">
                 <div class="bg-cover unity-cover"></div>
                 <video class="bg-hover unity-hover" autoplay loop muted playsinline>
                     <source src="Assets/image/index/UnityPage.webm" type="video/webm">
@@ -67,7 +67,7 @@
                 <div class="label"></div>
             </a>
 
-            <a href="Portfolio_HTML.html" target="_blank" class="work-block web">
+            <a href="Portfolio_HTML.html" class="work-block web">
                 <div class="bg-cover web-cover"></div>
                 <video class="bg-hover unity-hover" autoplay loop muted playsinline>
                     <source src="Assets/image/index/webPage.webm" type="video/webm">
@@ -105,6 +105,21 @@
         if (window.innerWidth < 768) {
             alert("建議使用電腦觀看完整體驗，手機版專屬頁面即將上線！");
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const scrollTo = params.get('scrollTo');
+
+            if (scrollTo) {
+                const target = document.getElementById(scrollTo);
+                if (target) {
+                    // 等待一點時間，確保畫面渲染完再滾動
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+        });
     </script>
 </body>
 
