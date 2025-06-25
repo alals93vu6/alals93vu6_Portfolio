@@ -15,14 +15,14 @@
             <span>作品集</span>
         </div>
         <nav class="nav-links">
-            <a href="index.html">首頁</a>
+            <a href="index.html?scrollTo=totalWorks">首頁</a>
             <a href="Portfolio_spine.html">關於我</a>
-            <a href="Portfolio_HTML.html">網頁作品</a>
+            <a href="Portfolio_HTML.html">網頁開發</a>
         </nav>
     </header>
 
     <div class="gallery-container">
-        <h2 class="section-title">Unity 作品</h2>
+        <h2 class="section-title">Unity作品</h2>
         <div class="carousel">
             <div class="arrow" onclick="prev()">&#9664;</div>
             <div class="thumbnails" id="thumbs"></div>
@@ -35,35 +35,35 @@
         const data = [
             {
                 title: '作品 A',
-                screenshot: 'A的遊戲截圖',
+                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
                 intro: '這是 A 的遊戲介紹內容。',
                 dev: '這是 A 的開發介紹內容。'
             },
             {
                 title: '作品 B',
-                screenshot: 'B的遊戲截圖',
+                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
                 intro: '這是 B 的遊戲介紹內容。',
                 dev: '這是 B 的開發介紹內容。'
             },
             {
                 title: '作品 C',
-                screenshot: 'C的遊戲截圖',
+                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
                 intro: '這是 C 的遊戲介紹內容。',
                 dev: '這是 C 的開發介紹內容。'
             },
             {
                 title: '作品 D',
-                screenshot: 'D的遊戲截圖',
+                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
                 intro: '這是 D 的遊戲介紹內容。',
                 dev: '這是 D 的開發介紹內容。'
             },
             {
                 title: '作品 E',
-                screenshot: 'E的遊戲截圖',
+                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
                 intro: '這是 E 的遊戲介紹內容。',
                 dev: '這是 E 的開發介紹內容。'
             },
-            
+
         ];
 
         let currentIndex = 0;
@@ -82,23 +82,50 @@
             });
         }
 
-        function select(index) {
+        function select(index, isInitial = false) {
+            if (index === currentIndex && !isInitial) return;
+
             currentIndex = index;
             renderThumbs();
+
             const item = data[index];
-            infoPanel.style.opacity = 0;
+
+            if (isInitial) {
+                // 第一次載入直接顯示內容，無動畫
+                infoPanel.innerHTML = `
+            <div class="info-screenshot">
+                <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+            </div>
+            <div class="info-text">
+                <div class="info-title">${item.title}</div>
+                <div class="info-desc">${item.intro}</div>
+                <div class="info-dev">${item.dev}</div>
+            </div>
+        `;
+                infoPanel.classList.add('fade-in'); // 進場效果保留
+                return;
+            }
+
+            // 點選切換才使用動畫
+            infoPanel.classList.remove('fade-in');
+            infoPanel.classList.add('fade-out');
+
             setTimeout(() => {
                 infoPanel.innerHTML = `
-          <div class="info-screenshot">${item.screenshot}</div>
-          <div class="info-text">
-            <div class="info-title">${item.title}</div>
-            <div class="info-desc">${item.intro}</div>
-            <div class="info-dev">${item.dev}</div>
-          </div>
+            <div class="info-screenshot">
+                <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+            </div>
+            <div class="info-text">
+                <div class="info-title">${item.title}</div>
+                <div class="info-desc">${item.intro}</div>
+                <div class="info-dev">${item.dev}</div>
+            </div>
         `;
-                infoPanel.style.opacity = 1;
-            }, 200);
+                infoPanel.classList.remove('fade-out');
+                infoPanel.classList.add('fade-in');
+            }, 400);
         }
+
 
         function prev() {
             currentIndex = (currentIndex - 1 + data.length) % data.length;
@@ -111,7 +138,7 @@
         }
 
         renderThumbs();
-        select(0);
+        select(0, true);
     </script>
 </body>
 
