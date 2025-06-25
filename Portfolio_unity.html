@@ -22,7 +22,7 @@
     </header>
 
     <div class="gallery-container">
-        <h2 class="section-title">Unity作品</h2>
+        <h2 class="section-title">Unity製作經驗</h2>
         <div class="carousel">
             <div class="arrow" onclick="prev()">&#9664;</div>
             <div class="thumbnails" id="thumbs"></div>
@@ -34,32 +34,51 @@
     <script>
         const data = [
             {
-                title: '作品 A',
+                title: '海島戀歌',
                 screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
+                thumbnail: '',
                 intro: '這是 A 的遊戲介紹內容。',
                 dev: '這是 A 的開發介紹內容。'
             },
             {
-                title: '作品 B',
+                title: '賽芙拉',
                 screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
+                thumbnail: '',
                 intro: '這是 B 的遊戲介紹內容。',
                 dev: '這是 B 的開發介紹內容。'
             },
             {
-                title: '作品 C',
+                title: '遊戲貴族_約聘人員',
                 screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
+                thumbnail: '',
                 intro: '這是 C 的遊戲介紹內容。',
                 dev: '這是 C 的開發介紹內容。'
             },
             {
-                title: '作品 D',
+                title: '羅馬生鼠鬥',
                 screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
+                thumbnail: 'Assets/image/index/HeroPage_BackGroundA.png',
                 intro: '這是 D 的遊戲介紹內容。',
                 dev: '這是 D 的開發介紹內容。'
             },
             {
-                title: '作品 E',
+                title: '痛扁一頓',
                 screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
+                thumbnail: '',
+                intro: '這是 E 的遊戲介紹內容。',
+                dev: '這是 E 的開發介紹內容。'
+            },
+            {
+                title: '顛倒的魯普斯',
+                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
+                thumbnail: '',
+                intro: '這是 E 的遊戲介紹內容。',
+                dev: '這是 E 的開發介紹內容。'
+            },
+            {
+                title: 'One Game Peer Week',
+                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
+                thumbnail: '',
                 intro: '這是 E 的遊戲介紹內容。',
                 dev: '這是 E 的開發介紹內容。'
             },
@@ -76,14 +95,20 @@
             data.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'thumb' + (i === currentIndex ? ' active' : '');
-                div.innerText = item.title.split(' ')[1];
+
+                const img = document.createElement('img');
+                img.src = item.thumbnail;
+                img.alt = item.title;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+
+                div.appendChild(img);
                 div.onclick = () => select(i);
                 thumbsDiv.appendChild(div);
             });
         }
-
         function select(index, isInitial = false) {
-            if (index === currentIndex && !isInitial) return;
 
             currentIndex = index;
             renderThumbs();
@@ -91,7 +116,6 @@
             const item = data[index];
 
             if (isInitial) {
-                // 第一次載入直接顯示內容，無動畫
                 infoPanel.innerHTML = `
             <div class="info-screenshot">
                 <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
@@ -102,28 +126,33 @@
                 <div class="info-dev">${item.dev}</div>
             </div>
         `;
-                infoPanel.classList.add('fade-in'); // 進場效果保留
+                infoPanel.classList.add('fade-in');
                 return;
             }
 
-            // 點選切換才使用動畫
             infoPanel.classList.remove('fade-in');
             infoPanel.classList.add('fade-out');
 
-            setTimeout(() => {
+            // 避免多次觸發 animationend：先清空，再重新加
+            infoPanel.addEventListener('animationend', function onFadeOut(e) {
+                if (e.animationName !== 'fadeOutUp') return; // ← 避免干擾
+                infoPanel.removeEventListener('animationend', onFadeOut);
+
                 infoPanel.innerHTML = `
-            <div class="info-screenshot">
-                <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
-            </div>
-            <div class="info-text">
-                <div class="info-title">${item.title}</div>
-                <div class="info-desc">${item.intro}</div>
-                <div class="info-dev">${item.dev}</div>
-            </div>
-        `;
+        <div class="info-screenshot">
+            <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+        </div>
+        <div class="info-text">
+            <div class="info-title">${item.title}</div>
+            <div class="info-desc">${item.intro}</div>
+            <div class="info-dev">${item.dev}</div>
+        </div>
+    `;
                 infoPanel.classList.remove('fade-out');
+                void infoPanel.offsetWidth; // reflow 保證動畫觸發
                 infoPanel.classList.add('fade-in');
-            }, 400);
+            });
+
         }
 
 

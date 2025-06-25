@@ -34,35 +34,20 @@
     <script>
         const data = [
             {
-                title: '作品 A',
+                title: '"這個網頁沒有功能"',
                 screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
+                thumbnail: '',
                 intro: '這是 A 的遊戲介紹內容。',
                 dev: '這是 A 的開發介紹內容。'
             },
             {
-                title: '作品 B',
+                title: 'NGO管理系統',
                 screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
-                intro: '這是 B 的遊戲介紹內容。',
-                dev: '這是 B 的開發介紹內容。'
+                thumbnail: '',
+                intro: 'NGO管理系統',
+                dev: 'NGO管理系統'
             },
-            {
-                title: '作品 C',
-                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
-                intro: '這是 C 的遊戲介紹內容。',
-                dev: '這是 C 的開發介紹內容。'
-            },
-            {
-                title: '作品 D',
-                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
-                intro: '這是 D 的遊戲介紹內容。',
-                dev: '這是 D 的開發介紹內容。'
-            },
-            {
-                title: '作品 E',
-                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
-                intro: '這是 E 的遊戲介紹內容。',
-                dev: '這是 E 的開發介紹內容。'
-            },
+            
 
         ];
 
@@ -76,14 +61,21 @@
             data.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'thumb' + (i === currentIndex ? ' active' : '');
-                div.innerText = item.title.split(' ')[1];
+
+                const img = document.createElement('img');
+                img.src = item.thumbnail;
+                img.alt = item.title;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+
+                div.appendChild(img);
                 div.onclick = () => select(i);
                 thumbsDiv.appendChild(div);
             });
         }
 
         function select(index, isInitial = false) {
-            if (index === currentIndex && !isInitial) return;
 
             currentIndex = index;
             renderThumbs();
