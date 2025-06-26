@@ -35,17 +35,19 @@
         const data = [
             {
                 title: '"這個網頁沒有功能"',
-                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
-                thumbnail: 'Assets/image/unityInfo/ListA_logo.jpg',
+                screenshot: 'Assets/image/htmlInfo/ListA_webM.webm',
+                thumbnail: 'Assets/image/htmlInfo/ListA_logo.jpg',
                 intro: '玩家將進入一個自稱「沒有功能」的網頁，實則暗藏互動與挑釁。在這片看似空白的網頁裡，玩家必須不斷嘗試點擊、干預與探索，逐步推進隱藏的關卡。<br>過程中，將與一位神秘又強勢的系統管理員產生一場場唇槍舌劍般的交鋒。<br>然而，當真相逐步揭曉、病毒的陰影浮現之時──你真的確定，你點下的每一步，都不是在走進某個陷阱嗎？',
-                dev: '這是我從 Unity 開發轉向 Web 前端的第一個作品，思鄉情懷讓我決定要挑戰看看在網頁製作遊戲！<br>在實現完整的互動流程中，我使用純 HTML、CSS 與 JavaScript 完成整個網頁結構與邏輯。<br>對我來說，這是一次從物件導向邏輯轉換為事件驅動模式的挑戰，也是我首次嘗試在沒有框架輔助下建立多關卡流程與互動機制。'
+                dev: '這是我從 Unity 開發轉向 Web 前端的第一個作品，思鄉情懷讓我決定要挑戰看看在網頁製作遊戲！<br>在實現完整的互動流程中，我使用純 HTML、CSS 與 JavaScript 完成整個網頁結構與邏輯。<br>對我來說，這是一次從物件導向邏輯轉換為事件驅動模式的挑戰，也是我首次嘗試在沒有框架輔助下建立多關卡流程與互動機制。',
+                theURL: 'https://alals93vu6.github.io/TheWebNotHaveFunction/',
             },
             {
                 title: '"NGO管理系統"',
-                screenshot: 'Assets/image/index/HeroPage_BackGroundA.png',
-                thumbnail: 'Assets/image/unityInfo/ListB_logo.jpg',
+                screenshot: 'Assets/image/htmlInfo/ListB_webM.webm',
+                thumbnail: 'Assets/image/htmlInfo/ListB_logo.jpg',
                 intro: '這是一個社工、個案、民眾三種身分共用的公益媒合平台。<br>整體分為前台與後台兩大部分：<br><br>前台主打「物資媒合」與「活動媒合」兩大核心功能，並包含活動推播與報名機制。<br>民眾可以參加活動、捐贈物資給個案；個案可以領取物資與報名活動；社工則能發布活動並供兩者瀏覽。<br><br>後台則是社工專用，支援個案檔案管理、表單紀錄、關懷狀態追蹤，甚至內建影片訪談自動轉逐字稿功能，協助社工快速整理與紀錄。也可直接建立活動，供前台顯示與參與。',
-                dev: '目前尚未正式開發，預計於專題階段完成。<br>這將是我首個整合前後台、多角色邏輯的大型網站作品，預期能強化我在資料管理、使用者分權、前後端整合與模組化架構方面的能力。'
+                dev: '目前尚未正式開發，預計於專題階段完成。<br>這將是我首個整合前後台、多角色邏輯的大型網站作品，預期能強化我在資料管理、使用者分權、前後端整合與模組化架構方面的能力。',
+                theURL: 'https://alals93vu6.github.io/alals93vu6_Portfolio/',
             }
             ,
 
@@ -87,14 +89,16 @@
                 // 第一次載入直接顯示內容，無動畫
                 infoPanel.innerHTML = `
             <div class="info-screenshot">
-                <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+                <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;" type="video/webm"></video>
             </div>
             <div class="info-text">
                 <div class="info-title">${item.title}</div>
                 <div class="info-desc">${item.intro}</div>
                 <div class="info-dev">${item.dev}</div>
-            </div>
-        `;
+                </div>
+                <div class="info-link">
+                    <a href="${item.theURL}" target="_blank" style="color: #3ea6ff; text-decoration: underline;">🔗 點擊了解更多</a>
+                    </div>`;
                 infoPanel.classList.add('fade-in'); // 進場效果保留
                 return;
             }
@@ -106,14 +110,16 @@
             setTimeout(() => {
                 infoPanel.innerHTML = `
             <div class="info-screenshot">
-                <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+                <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;" type="video/webm"></video>
             </div>
             <div class="info-text">
                 <div class="info-title">${item.title}</div>
                 <div class="info-desc">${item.intro}</div>
                 <div class="info-dev">${item.dev}</div>
-            </div>
-        `;
+                </div>
+                <div class="info-link">
+                    <a href="${item.theURL}" target="_blank" style="color: #3ea6ff; text-decoration: underline;">🔗 點擊了解更多</a>
+                    </div>`;
                 infoPanel.classList.remove('fade-out');
                 infoPanel.classList.add('fade-in');
             }, 400);
