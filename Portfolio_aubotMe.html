@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0">
+    <title>關於我</title>
+    <link rel="stylesheet" href="CSS/introduce.css">
+    <link rel="icon" href="Assets/image/index/logotest.png" type="image/png">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="Assets/image/index/logotest.png" alt="Logo" class="logo-img">
+            <span>作品集</span>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html?scrollTo=totalWorks">首頁</a>
+            <a href="Portfolio_unity.html">遊戲開發</a>
+            <a href="Portfolio_HTML.html">網頁開發</a>
+        </nav>
+    </header>
+
+    <div class="gallery-container">
+        <h2 class="section-title">更快速的了解我</h2>
+        <div class="carousel">
+            <div class="arrow" onclick="prev()">&#9664;</div>
+            <div class="thumbnails" id="thumbs"></div>
+            <div class="arrow" onclick="next()">&#9654;</div>
+        </div>
+        <div class="info-panel" id="info"></div>
+    </div>
+
+    <script>
+        const data = [
+            {
+                title: '關於我',
+                screenshot: 'Assets/image/unityInfo/ListA_webM.webm',
+                thumbnail: 'Assets/image/unityInfo/ListA_logo.jpg',
+                intro: '關於我',
+                dev: '關於我'
+            },
+            {
+                title: '關於我',
+                screenshot: 'Assets/image/unityInfo/ListA_webM.webm',
+                thumbnail: 'Assets/image/unityInfo/ListA_logo.jpg',
+                intro: '關於我',
+                dev: '關於我'
+            },
+            {
+                title: '關於我',
+                screenshot: 'Assets/image/unityInfo/ListA_webM.webm',
+                thumbnail: 'Assets/image/unityInfo/ListA_logo.jpg',
+                intro: '關於我',
+                dev: '關於我'
+            },
+            {
+                title: '關於我',
+                screenshot: 'Assets/image/unityInfo/ListA_webM.webm',
+                thumbnail: 'Assets/image/unityInfo/ListA_logo.jpg',
+                intro: '關於我',
+                dev: '關於我'
+            },
+
+        ];
+
+        let currentIndex = 0;
+
+        const thumbsDiv = document.getElementById('thumbs');
+        const infoPanel = document.getElementById('info');
+
+        function renderThumbs() {
+            thumbsDiv.innerHTML = '';
+            data.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'thumb' + (i === currentIndex ? ' active' : '');
+
+                const img = document.createElement('img');
+                img.src = item.thumbnail;
+                img.alt = item.title;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+
+                div.appendChild(img);
+                div.onclick = () => select(i);
+                thumbsDiv.appendChild(div);
+            });
+        }
+        function select(index, isInitial = false) {
+
+            currentIndex = index;
+            renderThumbs();
+
+            const item = data[index];
+
+            if (isInitial) {
+                infoPanel.innerHTML = `
+            <div class="info-screenshot">
+                <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+            </div>
+            <div class="info-text">
+                <div class="info-title">${item.title}</div>
+                <div class="info-desc">${item.intro}</div>
+                <div class="info-dev">${item.dev}</div>
+            </div>
+        `;
+                infoPanel.classList.add('fade-in');
+                return;
+            }
+
+            infoPanel.classList.remove('fade-in');
+            infoPanel.classList.add('fade-out');
+
+            // 避免多次觸發 animationend：先清空，再重新加
+            infoPanel.addEventListener('animationend', function onFadeOut(e) {
+                if (e.animationName !== 'fadeOutUp') return; // ← 避免干擾
+                infoPanel.removeEventListener('animationend', onFadeOut);
+
+                infoPanel.innerHTML = `
+        <div class="info-screenshot">
+            <video src="${item.screenshot}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+        </div>
+        <div class="info-text">
+            <div class="info-title">${item.title}</div>
+            <div class="info-desc">${item.intro}</div>
+            <div class="info-dev">${item.dev}</div>
+        </div>
+    `;
+                infoPanel.classList.remove('fade-out');
+                void infoPanel.offsetWidth; // reflow 保證動畫觸發
+                infoPanel.classList.add('fade-in');
+            });
+
+        }
+
+
+        function prev() {
+            currentIndex = (currentIndex - 1 + data.length) % data.length;
+            select(currentIndex);
+        }
+
+        function next() {
+            currentIndex = (currentIndex + 1) % data.length;
+            select(currentIndex);
+        }
+
+        renderThumbs();
+        select(0, true);
+    </script>
+    <div style="display: none;">
+        <video src="Assets/image/unityInfo/ListA_webM.webm" preload="auto"></video>
+        <video src="Assets/image/unityInfo/ListB_webM.webm" preload="auto"></video>
+        <video src="Assets/image/unityInfo/ListC_webM.webm" preload="auto"></video>
+        <video src="Assets/image/unityInfo/ListD_webM.webm" preload="auto"></video>
+        <video src="Assets/image/unityInfo/ListE_webM.webm" preload="auto"></video>
+        <video src="Assets/image/unityInfo/ListF_webM.webm" preload="auto"></video>
+        <video src="Assets/image/unityInfo/ListG_webM.webm" preload="auto"></video>
+    </div>
+</body>
+</html>
