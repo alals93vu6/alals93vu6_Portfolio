@@ -15,8 +15,8 @@
 #profileSection {
   position: relative;
   width: 100%;
-  min-height: 110vh;        /* 最小高度略超過一個螢幕 */
-  padding: 2rem 1rem;       /* 上下2rem，左右1rem內距 */
+  min-height: 100vh;        /* 最小高度為一個完整螢幕，防止縫隙 */
+  padding: 0 1rem;          /* 移除上下padding，只保留左右1rem內距 */
   background-color: rgb(17, 17, 17); /* 深灰色背景，與作品區統一 */
 
   /* Flexbox 佈局 - 雷達圖居中顯示 */

@@ -58,70 +58,147 @@ body {
 
 /* ====== Hero內容區佈局 ====== */
 /* 
-   注意: 這裡使用了硬編碼的佈局方式
-   - width: 35vw (固定35%視窗寬度)
-   - margin-left: 60% (固定60%左邊距)
-   
-   TODO: 未來可考慮改用更彈性的Grid或Flexbox佈局
+   使用彈性的Grid佈局取代硬編碼方式
+   - 使用CSS Grid創造左右分區佈局
+   - 左側60%留給背景圖片展示
+   - 右側40%放置文字內容
+   - 支援各種螢幕尺寸的自適應
 */
 .hero-wrapper {
-    width: 35vw;              /* 容器寬度為視窗寬度的35% */
-    height: 80vh;             /* 容器高度為視窗高度的80% */
-    display: flex;
-    justify-content: flex-start; /* 內容靠左對齊 */
+    /* Grid 佈局設置 - 響應式欄位分配 */
+    display: grid;
+    
+    /* 響應式Grid欄位配置 
+       大螢幕(>=1200px): 左60% 右40%
+       中螢幕(768-1199px): 左50% 右50% 
+       小螢幕(<768px): 單欄佈局 */
+    grid-template-columns: 
+        clamp(45%, 50% + 10vw, 65%) 
+        clamp(35%, 50% - 10vw, 55%);
+    
+    width: 100%;              /* 充滿整個螢幕寬度 */
+    height: 100vh;            /* 容器高度與主容器一致，消除縫隙 */
+    min-height: 600px;        /* 最小高度確保內容可讀性 */
+    
+    /* 內容對齊 */
     align-items: center;      /* 垂直居中 */
-    padding-left: 2rem;       /* 左側內距 */
+    
+    /* 響應式安全邊距 - 以1920*1080為基準 */
+    padding: 0 clamp(1rem, 2vw, 4rem); /* 1920px時約38px左右邊距 */
     box-sizing: border-box;
-    margin-left: 60%;         /* 整個容器向右偏移60% */
+    
+    /* 增加欄位間距確保文字不被擠壓 */
+    gap: clamp(1rem, 3vw, 2rem);
     
     /* 除錯用 - 可以取消註解查看容器邊界 */
-    /* background-color: red; */
+    /* background-color: rgba(255, 0, 0, 0.2); */
+}
+
+/* Hero左側區域 (背景圖片區) */
+.hero-wrapper::before {
+    content: '';
+    grid-column: 1;          /* 佔據第一欄 */
+    /* 這個區域主要給背景圖片使用，不放置內容 */
 }
 
 /* ====== Hero文字內容 ====== */
 .hero-text {
-    max-width: 100%;
+    /* Grid 定位 */
+    grid-column: 2;          /* 放置在第二欄 (右側) */
+    
+    /* 文字樣式 */
     color: white;
     text-align: left;         /* 文字靠左對齊 */
     z-index: 10;             /* 確保在背景遮罩之上 */
+    
+    /* 響應式邊距和內距 - 以1920*1080為基準優化 */
+    padding: clamp(1rem, 2.5vw, 3rem); /* 1920px時約48px內距 */
+    max-width: 100%;
+    
+    /* 確保文字容器有足夠空間，避免被裁切 */
+    min-width: 0;            /* 允許flexbox子元素縮小 */
+    overflow-wrap: break-word; /* 長文字自動換行 */
+    word-break: break-word;   /* 強制換行避免溢出 */
 }
 
-/* Hero標題樣式 */
+/* Hero標題樣式 - 16:10優化雙重縮放 */
 .hero-text h1 {
-    font-size: 2.8rem;       /* 大標題字體 */
+    /* 針對16:10螢幕優化的字體大小 */
+    font-size: min(
+        min(4.2rem, 7.5vw),  /* 第一層：針對16:10提高基準 */
+        max(4.8vh, 38px)     /* 第二層：1366×768保護，16:10放寬 */
+    );
     font-weight: bold;
-    margin-bottom: 1rem;     /* 標題和段落間距 */
+    
+    /* 間距針對16:10優化 */
+    margin-bottom: min(
+        min(2.2rem, 3.2vw),  /* 16:10螢幕適度增加間距 */
+        max(1.8vh, 14px)     /* 保護最小值 */
+    );
+    
+    line-height: 1.2;        /* 保持緊湊 */
+    
+    /* 確保標題在各種螢幕下都能完整顯示 */
+    overflow-wrap: break-word;
+    hyphens: auto;           /* 自動連字符 */
 }
 
-/* Hero描述段落樣式 */
+/* Hero描述段落樣式 - 16:10優化雙重縮放 */
 .hero-text p {
-    font-size: 1.5rem;       /* 描述文字字體 */
-    line-height: 1.6;        /* 行高增加可讀性 */
+    /* 針對16:10螢幕優化的字體大小 */
+    font-size: min(
+        min(1.9rem, 4.2vw),  /* 第一層：針對16:10提高基準 */
+        max(2.2vh, 17px)     /* 第二層：1366×768保護，16:10放寬 */
+    );
+    
+    line-height: 1.35;       /* 稍微放寬行高提升可讀性 */
+    
+    /* 間距針對16:10優化 */
+    margin-bottom: min(
+        min(1.7rem, 3.7vw),  /* 16:10螢幕適度增加間距 */
+        max(1.2vh, 9px)      /* 保護最小值 */
+    );
+    
+    /* 文字流暢性 */
+    text-align: justify;     /* 兩端對齊 */
+    overflow-wrap: break-word;
 }
 
 /* ====== "了解更多"連結樣式 ====== */
 /*
-   注意: 使用絕對定位的硬編碼方式
-   - bottom: 8rem, right: 7rem (固定距離)
-   
-   TODO: 考慮改為相對於hero-wrapper的相對定位
+   改為相對定位，放在hero-text內部作為自然的文字流程
+   移除硬編碼的絕對定位，讓它跟隨文字內容
 */
 .more-link {
-    position: absolute;
-    bottom: 8rem;            /* 距離視窗底部8rem */
-    right: 7rem;             /* 距離視窗右邊7rem */
+    /* 改為內聯區塊，自然跟隨文字流程 */
+    display: inline-block;
+    margin-top: clamp(1rem, 3vw, 2rem); /* 響應式上邊距 */
+    
+    /* 樣式設置 */
     color: rgb(255, 255, 255);
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: min(
+        clamp(1.1rem, 2.6vw, 1.7rem), /* 針對16:10提高基準 */
+        max(1.6vh, 12px)               /* 1366×768保護 */
+    ); 
     font-weight: bold;
+    
+    /* 視覺效果 */
     opacity: 0.8;            /* 初始透明度 */
-    transition: opacity 0.3s ease; /* 平滑的透明度變化 */
+    padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 1.5rem); /* 響應式內距 */
+    border: 2px solid rgba(255, 255, 255, 0.3); /* 淡邊框 */
+    border-radius: var(--border-radius, 8px); /* 圓角 */
+    
+    /* 動畫效果 */
+    transition: all 0.3s ease; /* 所有屬性的平滑變化 */
 }
 
 /* "了解更多"連結懸停效果 */
 .more-link:hover {
     opacity: 1;              /* 懸停時完全不透明 */
-    text-decoration: underline; /* 添加下劃線 */
+    background-color: rgba(255, 255, 255, 0.1); /* 淡背景 */
+    border-color: rgba(255, 255, 255, 0.6); /* 加深邊框 */
+    transform: translateY(-2px); /* 輕微上移效果 */
 }
 
 /* ====== 淡入動畫類別 ====== */

@@ -15,7 +15,7 @@
   position: relative;
   width: 100%;
   min-height: 20vh;         /* 最小高度為視窗高度的20% */
-  padding: 2rem 1rem;       /* 上下2rem，左右1rem內距 */
+  padding: 0 1rem;          /* 移除上下padding，只保留左右1rem內距 */
   background-color: rgb(65, 65, 65); /* 中灰色背景，區別於其他區塊 */
   color: white;             /* 白色文字 */
 
@@ -44,8 +44,8 @@
 
 /* ====== 聯絡框標題 ====== */
 .contact-box h3 {
-  font-size: 1.4rem;        /* 標題字體大小 */
-  margin-bottom: 0.8rem;    /* 標題和列表間距 */
+  font-size: clamp(1.2rem, 3vw, 1.6rem); /* 響應式標題字體 */
+  margin-bottom: clamp(0.6rem, 2vw, 1rem); /* 響應式標題間距 */
   color: white;             /* 白色標題文字 */
 }
 
@@ -59,17 +59,17 @@
 .contact-box li {
   display: flex;            /* Flexbox佈局對齊圖示和文字 */
   align-items: center;      /* 垂直居中對齊 */
-  margin-bottom: 0.6rem;    /* 項目間距 */
-  font-size: 1rem;         /* 文字大小 */
+  margin-bottom: clamp(0.4rem, 1.5vw, 0.8rem); /* 響應式項目間距 */
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* 響應式文字大小 */
 }
 
 /* ====== 聯絡資訊圖示 ====== */
 .contact-box li img {
-  width: 20px;             /* 圖示寬度 */
-  height: 20px;            /* 圖示高度 */
-  object-fit: contain;     /* 保持圖示比例 */
-  margin-right: 0.5rem;    /* 圖示和文字間距 */
-  filter: brightness(1.1);  /* 稍微提高亮度增加可見度 */
+  width: clamp(18px, 4vw, 24px);  /* 響應式圖示寬度 */
+  height: clamp(18px, 4vw, 24px); /* 響應式圖示高度 */
+  object-fit: contain;            /* 保持圖示比例 */
+  margin-right: clamp(0.4rem, 1.5vw, 0.8rem); /* 響應式圖示間距 */
+  filter: brightness(1.1);         /* 稍微提高亮度增加可見度 */
 }
 
 /* ====== 聯絡資訊連結 ====== */
