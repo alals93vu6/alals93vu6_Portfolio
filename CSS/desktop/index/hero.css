@@ -1,0 +1,137 @@
+/* ========================================================================
+   桌面版Hero區塊樣式 - Desktop Hero Section Styles
+   ======================================================================== 
+   
+   用途: 電腦版首頁Hero區塊的樣式，包含:
+   - 基礎重置樣式
+   - 全螢幕背景設置
+   - Hero內容區塊佈局
+   - 文字樣式和動畫效果
+   - "了解更多"連結樣式
+   
+   注意: 此文件移除了所有手機版媒體查詢，專注於桌面版體驗
+   ======================================================================== */
+
+/* ====== 基礎重置樣式 ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 確保padding和border包含在元素總寬度內 */
+}
+
+/* ====== 頁面主體背景設置 ====== */
+body {
+    margin: 0;
+    padding: 0;
+    
+    /* 背景圖片設置 - 桌面版使用fixed attachment獲得視差效果 */
+    background-image: url("../../Assets/image/index/HeroPage_BackGroundA.png");
+    background-repeat: no-repeat;
+    background-size: cover;           /* 覆蓋整個視窗 */
+    background-position: right center; /* 背景圖片偏右置中 */
+    background-attachment: fixed;     /* 固定背景創造視差滾動效果 */
+    background-color: black;          /* 背景色作為fallback */
+    
+    overflow-x: hidden; /* 隱藏水平滾動條 */
+}
+
+/* ====== Hero主容器 ====== */
+#HEROpage {
+    height: 100vh;    /* 強制全螢幕高度 */
+    width: 100%;
+    position: relative; /* 為子元素提供定位參考點 */
+}
+
+/* Hero區塊載入時的遮罩效果 */
+.bg-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 1;               /* 初始完全不透明 */
+    z-index: 500;            /* 高層級確保在內容之上 */
+    transition: opacity 3s ease; /* 3秒淡出動畫 */
+    pointer-events: none;     /* 不阻擋滑鼠事件 */
+}
+
+/* ====== Hero內容區佈局 ====== */
+/* 
+   注意: 這裡使用了硬編碼的佈局方式
+   - width: 35vw (固定35%視窗寬度)
+   - margin-left: 60% (固定60%左邊距)
+   
+   TODO: 未來可考慮改用更彈性的Grid或Flexbox佈局
+*/
+.hero-wrapper {
+    width: 35vw;              /* 容器寬度為視窗寬度的35% */
+    height: 80vh;             /* 容器高度為視窗高度的80% */
+    display: flex;
+    justify-content: flex-start; /* 內容靠左對齊 */
+    align-items: center;      /* 垂直居中 */
+    padding-left: 2rem;       /* 左側內距 */
+    box-sizing: border-box;
+    margin-left: 60%;         /* 整個容器向右偏移60% */
+    
+    /* 除錯用 - 可以取消註解查看容器邊界 */
+    /* background-color: red; */
+}
+
+/* ====== Hero文字內容 ====== */
+.hero-text {
+    max-width: 100%;
+    color: white;
+    text-align: left;         /* 文字靠左對齊 */
+    z-index: 10;             /* 確保在背景遮罩之上 */
+}
+
+/* Hero標題樣式 */
+.hero-text h1 {
+    font-size: 2.8rem;       /* 大標題字體 */
+    font-weight: bold;
+    margin-bottom: 1rem;     /* 標題和段落間距 */
+}
+
+/* Hero描述段落樣式 */
+.hero-text p {
+    font-size: 1.5rem;       /* 描述文字字體 */
+    line-height: 1.6;        /* 行高增加可讀性 */
+}
+
+/* ====== "了解更多"連結樣式 ====== */
+/*
+   注意: 使用絕對定位的硬編碼方式
+   - bottom: 8rem, right: 7rem (固定距離)
+   
+   TODO: 考慮改為相對於hero-wrapper的相對定位
+*/
+.more-link {
+    position: absolute;
+    bottom: 8rem;            /* 距離視窗底部8rem */
+    right: 7rem;             /* 距離視窗右邊7rem */
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    opacity: 0.8;            /* 初始透明度 */
+    transition: opacity 0.3s ease; /* 平滑的透明度變化 */
+}
+
+/* "了解更多"連結懸停效果 */
+.more-link:hover {
+    opacity: 1;              /* 懸停時完全不透明 */
+    text-decoration: underline; /* 添加下劃線 */
+}
+
+/* ====== 淡入動畫類別 ====== */
+/* 用於JavaScript控制的淡入效果 */
+.fade {
+    opacity: 0;              /* 初始透明 */
+    transition: opacity 0.6s ease; /* 淡入動畫持續時間 */
+}
+
+/* 淡入動畫的顯示狀態 */
+.fade.show {
+    opacity: 1;              /* 完全顯示 */
+}

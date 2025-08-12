@@ -1,0 +1,178 @@
+/* ========================================================================
+   桌面版作品展示區樣式 - Desktop Total Works Section Styles
+   ======================================================================== 
+   
+   用途: 電腦版作品展示區塊的樣式，包含:
+   - 作品區塊主容器佈局
+   - 作品項目的Flexbox佈局與互動效果
+   - 懸停時的拉伸和淡化效果
+   - 背景圖片和文字標籤樣式
+   
+   特色: 桌面版特有的懸停拉伸效果和clip-path斜切設計
+   ======================================================================== */
+
+/* ====== 作品展示主容器 ====== */
+#totalWorks {
+  position: relative;
+  width: 100%;
+  min-height: 110vh;        /* 最小高度略超過一個螢幕 */
+  padding: 2rem 1rem;       /* 上下2rem，左右1rem內距 */
+  background-color: rgb(17, 17, 17); /* 深灰色背景 */
+
+  /* Flexbox 佈局 - 垂直排列 */
+  display: flex;
+  flex-direction: column;   /* 垂直排列: 標題 -> 作品容器 */
+  justify-content: flex-start; /* 從頂部開始排列 */
+  align-items: center;      /* 水平居中對齊 */
+  gap: 2rem;               /* 子元素間距 */
+}
+
+/* ====== 作品容器 - Flexbox佈局 ====== */
+/*
+   注意: 使用固定尺寸的硬編碼方式
+   - max-width: 1200px (固定最大寬度)
+   - height: 70vh (固定高度為視窗高度70%)
+   
+   TODO: 考慮改為更彈性的響應式設計
+*/
+.works-container {
+  display: flex;            /* 水平排列作品項目 */
+  width: 100%;
+  max-width: 1200px;        /* 限制最大寬度 */
+  height: 70vh;             /* 固定高度 */
+  gap: 10px;               /* 作品項目間距 */
+}
+
+/* 滾動錨點偏移 - 避免被固定導航欄遮住 */
+.scroll-anchor {
+  scroll-margin-top: 80px;  /* 根據導航欄高度調整 */
+}
+
+/* ====== 單個作品項目 ====== */
+.work-block {
+  position: relative;
+  display: block;           /* 作為連結使用 */
+  flex: 1;                 /* 平均分配寬度 */
+  overflow: hidden;         /* 隱藏溢出內容 */
+  text-decoration: none;    /* 移除連結下劃線 */
+  color: inherit;
+  cursor: pointer;
+  
+  /* 桌面版特色: 斜切效果 */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%); /* 底部斜切 */
+  transition: all 0.5s ease; /* 所有變化的平滑過渡 */
+}
+
+/* ====== 懸停互動效果 ====== */
+/* 當懸停在容器上時，所有項目變暗變小 */
+.works-container:hover .work-block {
+  flex: 1;                 /* 保持原始寬度比例 */
+  opacity: 0.6;            /* 降低透明度 */
+  filter: brightness(0.5);  /* 降低亮度 */
+}
+
+/* 當懸停在特定項目上時，該項目放大高亮 */
+.works-container:hover .work-block:hover {
+  flex: 2;                 /* 寬度變為原來的2倍 */
+  opacity: 1;              /* 完全不透明 */
+  filter: brightness(1);    /* 正常亮度 */
+  z-index: 1;              /* 提升層級確保在其他項目之上 */
+}
+
+/* ====== 背景圖片層 ====== */
+/* 共用的背景圖片基礎樣式 */
+.bg-cover, .bg-hover {
+  position: absolute;
+  inset: 0;                /* 等同於 top:0, right:0, bottom:0, left:0 */
+  background-size: cover;   /* 圖片覆蓋整個區域 */
+  background-position: center; /* 圖片居中 */
+  background-repeat: no-repeat;
+  transition: opacity 0.5s ease; /* 透明度變化動畫 */
+}
+
+/* 懸停時顯示的圖片/影片層 */
+.bg-hover {
+  /* 影片元素專用樣式 */
+  object-fit: cover;        /* 影片填充方式 */
+  width: 100%;
+  height: 100%;
+  opacity: 0;              /* 初始隱藏 */
+  z-index: 0;              /* 在背景層 */
+  pointer-events: none;     /* 不攔截滑鼠事件 */
+  filter: none !important;  /* 確保影片不受父元素filter影響 */
+}
+
+/* 懸停時顯示hover層 */
+.work-block:hover .bg-hover {
+  opacity: 1;              /* 懸停時完全顯示 */
+}
+
+/* ====== 文字標籤覆蓋層 ====== */
+.label {
+  position: relative;
+  z-index: 1;              /* 在背景圖片之上 */
+  color: white;
+  font-size: 2rem;         /* 較大的標籤字體 */
+  font-weight: bold;
+  text-align: center;
+  
+  /* 充滿整個作品項目 */
+  width: 100%;
+  height: 100%;
+  
+  /* 使用Flexbox居中對齊文字 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* 半透明黑色背景增加文字可讀性 */
+  background-color: rgba(0,0,0,0.3);
+}
+
+/* ====== 區塊標題 ====== */
+.works-title {
+  color: white;
+  text-align: center;
+  font-size: 4rem;          /* 大標題字體 */
+  font-weight: bold;
+  margin: 0 auto 2rem auto; /* 下方2rem間距 */
+  font-family: 'Noto Sans TC', sans-serif; /* 中文字體 */
+  width: 100%;
+  
+  /* 文字效果 */
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6); /* 陰影增加可讀性 */
+  letter-spacing: 2px;      /* 字母間距 */
+}
+
+/* ====== 專屬背景圖片設定 ====== */
+/* Spine 2D 作品封面 */
+.spine-cover {
+  background-image: url("../../Assets/image/index/SpinePage.png");
+}
+
+/* 網頁作品封面 */
+.web-cover {
+  background-image: url("../../Assets/image/index/webPage.png");
+}
+
+/* Unity 遊戲作品封面 */
+.unity-cover {
+  background-image: url("../../Assets/image/index/UnityPage.png");
+}
+
+/* 
+   懸停動畫圖片 (目前註解掉)
+   可以取消註解來添加懸停時的GIF動畫效果
+   
+.spine-hover {
+  background-image: url("../../Assets/image/index/spine_GIF_TEST.gif");
+}
+
+.web-hover {
+  background-image: url("../../Assets/image/index/WEB_GIF_TEST.gif");
+}
+
+.unity-hover {
+  background-image: url("../../Assets/image/index/UnityPage_GIF3.gif");
+}
+*/
