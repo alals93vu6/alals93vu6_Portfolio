@@ -15,32 +15,42 @@
 #totalWorks {
   position: relative;
   width: 100%;
-  min-height: 110vh;        /* 最小高度略超過一個螢幕 */
-  padding: 2rem 1rem;       /* 上下2rem，左右1rem內距 */
+  min-height: 100vh;        /* 最小高度為一個完整螢幕，防止縫隙 */
+  padding: 0 1rem;          /* 移除上下padding，只保留左右1rem內距 */
   background-color: rgb(17, 17, 17); /* 深灰色背景 */
 
   /* Flexbox 佈局 - 垂直排列 */
   display: flex;
   flex-direction: column;   /* 垂直排列: 標題 -> 作品容器 */
-  justify-content: flex-start; /* 從頂部開始排列 */
+  justify-content: center;  /* 垂直居中對齊 */
   align-items: center;      /* 水平居中對齊 */
   gap: 2rem;               /* 子元素間距 */
 }
 
-/* ====== 作品容器 - Flexbox佈局 ====== */
+/* ====== 作品容器 - 響應式Flexbox佈局 ====== */
 /*
-   注意: 使用固定尺寸的硬編碼方式
-   - max-width: 1200px (固定最大寬度)
-   - height: 70vh (固定高度為視窗高度70%)
-   
-   TODO: 考慮改為更彈性的響應式設計
+   改為響應式設計，適應不同螢幕尺寸
+   - 使用clamp()實現彈性尺寸
+   - 保持原本的水平並排效果
+   - 增加最小高度確保內容可見性
 */
 .works-container {
   display: flex;            /* 水平排列作品項目 */
   width: 100%;
-  max-width: 1200px;        /* 限制最大寬度 */
-  height: 70vh;             /* 固定高度 */
-  gap: 10px;               /* 作品項目間距 */
+  
+  /* 響應式寬度限制 - 以1920*1080為基準 */
+  max-width: min(1500px, 92vw); /* 1920px時約1766px寬度 */
+  
+  /* 響應式高度 - 以1920*1080為基準優化 */
+  height: clamp(450px, 70vh, 756px); /* 1920*1080時約756px高度 */
+  min-height: 450px;        /* 提高最小高度保證內容可見 */
+  
+  /* 響應式間距 */
+  gap: clamp(8px, 1vw, 16px); /* 間距隨螢幕大小調整 */
+  
+  /* 內容居中和邊距 */
+  margin: 0 auto;           /* 水平居中 */
+  padding: 0 clamp(0.5rem, 2vw, 1rem); /* 響應式左右內距 */
 }
 
 /* 滾動錨點偏移 - 避免被固定導航欄遮住 */
@@ -112,7 +122,9 @@
   position: relative;
   z-index: 1;              /* 在背景圖片之上 */
   color: white;
-  font-size: 2rem;         /* 較大的標籤字體 */
+  
+  /* 響應式字體大小 - 以1920*1080為基準 */
+  font-size: clamp(1.3rem, 2.2vw, 2.8rem); /* 1920px時約42px標籤字體 */
   font-weight: bold;
   text-align: center;
   
@@ -127,21 +139,32 @@
   
   /* 半透明黑色背景增加文字可讀性 */
   background-color: rgba(0,0,0,0.3);
+  
+  /* 響應式內距 */
+  padding: clamp(0.5rem, 2vw, 1rem);
 }
 
 /* ====== 區塊標題 ====== */
 .works-title {
   color: white;
   text-align: center;
-  font-size: 4rem;          /* 大標題字體 */
+  
+  /* 響應式標題字體 - 以1920*1080為基準 */
+  font-size: clamp(2.5rem, 4.5vw, 6rem); /* 1920px時約86px */
   font-weight: bold;
-  margin: 0 auto 2rem auto; /* 下方2rem間距 */
+  
+  /* 響應式間距 - 以1920*1080為基準 */
+  margin: 0 auto clamp(1.5rem, 3vw, 4rem) auto; /* 1920px時約58px下邊距 */
+  
   font-family: 'Noto Sans TC', sans-serif; /* 中文字體 */
   width: 100%;
   
   /* 文字效果 */
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6); /* 陰影增加可讀性 */
-  letter-spacing: 2px;      /* 字母間距 */
+  letter-spacing: clamp(1px, 0.5vw, 3px); /* 響應式字母間距 */
+  
+  /* 響應式行高 */
+  line-height: 1.2;         /* 緊湊行高適合大標題 */
 }
 
 /* ====== 專屬背景圖片設定 ====== */
