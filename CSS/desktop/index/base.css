@@ -1,0 +1,111 @@
+/* ========================================================================
+   桌面版基礎樣式 - Desktop Base Styles
+   ======================================================================== 
+   
+   用途: 電腦版 (≥768px) 的基礎樣式，包含:
+   - 全域設置 (HTML滾動行為)
+   - 導航欄 (Navbar) 樣式
+   - 回到頂部按鈕 (BackToTop) 樣式
+   - 基礎互動效果
+   
+   注意: 這個文件專門為桌面版設計，不包含響應式媒體查詢
+   ======================================================================== */
+
+/* ====== 全域設置 ====== */
+html {
+  scroll-behavior: smooth; /* 平滑滾動效果 */
+}
+
+/* ====== 回到頂部按鈕 - Desktop版本 ====== */
+#backToTop {
+  /* 定位設置 */
+  position: fixed;
+  bottom: 50px;      /* 距離底部50px (桌面版較大間距) */
+  right: 50px;       /* 距離右邊50px */
+  z-index: 1000;     /* 確保在最上層 */
+  
+  /* 尺寸設置 */
+  width: 100px;      /* 桌面版較大尺寸 */
+  height: 100px;
+  padding: 0;
+  
+  /* 樣式設置 */
+  border: none;
+  background: none;
+  border-radius: 50%; /* 圓形按鈕 */
+  cursor: pointer;
+  overflow: hidden;   /* 隱藏溢出內容 */
+  
+  /* 動畫效果 */
+  opacity: 0;         /* 初始隱藏 */
+  transition: opacity 0.5s ease, transform 0.2s; /* 平滑的透明度和變形過渡 */
+}
+
+/* 回到頂部按鈕內的圖片 */
+#backToTop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* 保持圖片比例填充 */
+  border-radius: 50%; /* 圓形裁切 */
+  display: block;
+}
+
+/* 回到頂部按鈕懸停效果 */
+#backToTop:hover {
+  transform: scale(1.1); /* 懸停時放大1.1倍 */
+}
+
+/* ====== 導航欄 - Desktop版本 ====== */
+.navbar {
+  /* 佈局設置 */
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* 左右兩端對齊 */
+  align-items: center;           /* 垂直居中 */
+  
+  /* 定位設置 */
+  position: sticky; /* 黏性定位，滾動時保持在頂部 */
+  top: 0;
+  z-index: 1000;   /* 確保在其他元素之上 */
+  
+  /* 樣式設置 */
+  background-color: #313131; /* 深灰色背景 */
+  color: white;
+  padding: 1rem 2rem;        /* 上下1rem，左右2rem的內距 */
+}
+
+/* 導航欄 Logo 區域 */
+.navbar .logo {
+  display: flex;
+  align-items: center; /* 垂直居中對齊 */
+  gap: 0.75rem;        /* Logo圖片和文字間距 */
+  font-weight: bold;
+  font-size: 2rem;     /* 較大的字體尺寸 (桌面版) */
+}
+
+/* Logo 圖片樣式 */
+.logo-img {
+  width: 50px;         /* 固定寬度 */
+  height: 50px;        /* 固定高度，形成正方形 */
+  object-fit: cover;   /* 保持比例填充 */
+  border-radius: 8px;  /* 圓角效果 */
+}
+
+/* 導航連結區域 */
+.navbar .nav-links {
+  display: flex;
+  gap: 2rem;          /* 連結之間的間距 (桌面版較大) */
+}
+
+/* 導航連結樣式 */
+.navbar .nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s; /* 顏色變化的平滑過渡 */
+}
+
+/* 導航連結懸停效果 */
+.navbar .nav-links a:hover {
+  color: #ffd369; /* 懸停時變為金黃色 */
+}

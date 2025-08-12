@@ -1,0 +1,84 @@
+/* ========================================================================
+   桌面版聯絡資訊區塊樣式 - Desktop Contact Info Section Styles
+   ======================================================================== 
+   
+   用途: 電腦版聯絡資訊區塊的樣式，包含:
+   - 聯絡資訊主容器佈局
+   - 聯絡框的Flexbox響應式設計
+   - 圖示和連結的樣式設計
+   
+   特色: 使用Flexbox實現響應式的雙欄佈局
+   ======================================================================== */
+
+/* ====== 聯絡資訊主容器 ====== */
+#ContactInfo {
+  position: relative;
+  width: 100%;
+  min-height: 20vh;         /* 最小高度為視窗高度的20% */
+  padding: 2rem 1rem;       /* 上下2rem，左右1rem內距 */
+  background-color: rgb(65, 65, 65); /* 中灰色背景，區別於其他區塊 */
+  color: white;             /* 白色文字 */
+
+  /* Flexbox 佈局 - 響應式雙欄設計 */
+  display: flex;
+  justify-content: center;  /* 水平居中對齊 */
+  align-items: flex-start;  /* 頂部對齊 */
+  gap: 5vw;                /* 聯絡框間距為視窗寬度的5% */
+  flex-wrap: wrap;          /* 允許換行，支援響應式佈局 */
+}
+
+/* ====== 聯絡資訊框 ====== */
+/*
+   使用Flex佈局實現響應式設計:
+   - flex: 1 1 300px
+     * flex-grow: 1 (可以放大)
+     * flex-shrink: 1 (可以縮小)  
+     * flex-basis: 300px (基礎寬度300px)
+   
+   當空間足夠時，兩個框平分寬度
+   當空間不足時，每個框最小保持300px寬度並換行
+*/
+.contact-box {
+  flex: 1 1 300px;          /* 響應式彈性佈局 */
+}
+
+/* ====== 聯絡框標題 ====== */
+.contact-box h3 {
+  font-size: 1.4rem;        /* 標題字體大小 */
+  margin-bottom: 0.8rem;    /* 標題和列表間距 */
+  color: white;             /* 白色標題文字 */
+}
+
+/* ====== 聯絡資訊列表 ====== */
+.contact-box ul {
+  list-style: none;         /* 移除列表項目符號 */
+  padding: 0;              /* 移除預設內距 */
+}
+
+/* ====== 聯絡資訊項目 ====== */
+.contact-box li {
+  display: flex;            /* Flexbox佈局對齊圖示和文字 */
+  align-items: center;      /* 垂直居中對齊 */
+  margin-bottom: 0.6rem;    /* 項目間距 */
+  font-size: 1rem;         /* 文字大小 */
+}
+
+/* ====== 聯絡資訊圖示 ====== */
+.contact-box li img {
+  width: 20px;             /* 圖示寬度 */
+  height: 20px;            /* 圖示高度 */
+  object-fit: contain;     /* 保持圖示比例 */
+  margin-right: 0.5rem;    /* 圖示和文字間距 */
+  filter: brightness(1.1);  /* 稍微提高亮度增加可見度 */
+}
+
+/* ====== 聯絡資訊連結 ====== */
+.contact-box a {
+  color: #cdeaff;          /* 淺藍色連結文字 */
+  text-decoration: none;    /* 移除下劃線 */
+}
+
+/* 聯絡資訊連結懸停效果 */
+.contact-box a:hover {
+  text-decoration: underline; /* 懸停時添加下劃線 */
+}
