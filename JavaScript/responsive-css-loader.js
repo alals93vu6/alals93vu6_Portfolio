@@ -86,15 +86,13 @@
                 'Assets/image/index/profileSectionB.png'
               ];
         
-        // Hero背景圖片根據設備類型選擇（包含A和B兩張）
+        // Hero背景圖片根據設備類型選擇（只使用A圖片，與CSS保持一致）
         const heroImages = deviceType === 'mobile' 
             ? [
-                'Assets/image/index/HeroPage_BackGroundA_Mobile.png',
-                'Assets/image/index/HeroPage_BackGroundB_Mobile.png'
+                'Assets/image/index/HeroPage_BackGroundA_Mobile.png'
               ]
             : [
-                'Assets/image/index/HeroPage_BackGroundA.png',
-                'Assets/image/index/HeroPage_BackGroundB.png'
+                'Assets/image/index/HeroPage_BackGroundA.png'
               ];
         
         const images = [...heroImages, ...profileImages, ...baseImages];
