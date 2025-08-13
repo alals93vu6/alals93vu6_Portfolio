@@ -16,30 +16,28 @@
   position: relative;
   width: 100%;
   min-height: 100vh;        /* 最小高度為一個完整螢幕，防止縫隙 */
-  padding: 0 1rem;          /* 移除上下padding，只保留左右1rem內距 */
-  background-color: rgb(17, 17, 17); /* 深灰色背景，與作品區統一 */
+  padding: 0;               /* 移除所有內距，使用全螢幕背景 */
+  
+  /* 手機版背景設置 */
+  background-color: rgb(17, 17, 17); /* 基礎背景色 */
 
-  /* Flexbox 佈局 - 雷達圖居中顯示 */
+  /* Flexbox 佈局 - 保持居中對齊 */
   display: flex;
   justify-content: center;  /* 水平居中 */
   align-items: center;      /* 垂直居中 */
 }
 
-/* ====== 雷達圖容器 - 手機版優化 ====== */
+/* ====== 雷達圖容器 - 手機版隱藏 ====== */
 /*
-   手機版雷達圖設計考慮:
-   - 適當縮小尺寸確保完整顯示
-   - 保持高解析度和清晰度
-   - 觸控友好的邊距設置
+   手機版改用背景圖片，隱藏原本的Canvas容器
 */
 .profile-container {
+  /* 手機版尺寸設置 - 與PC版邏輯一致 */
   position: relative;
   
   /* 手機版尺寸設置 */
-  width: min(350px, 90vw);   /* 最大350px或視窗寬度90% */
-  height: min(350px, 90vw);  /* 保持正方形比例 */
-  max-width: 350px;          /* 最大寬度限制 */
-  max-height: 350px;         /* 最大高度限制 */
+  width: 100%;               /* 充滿父容器寬度 */
+  height: 100%;              /* 充滿父容器高度 */
   
   /* 確保容器居中 */
   margin: 0 auto;
@@ -73,27 +71,49 @@
     inset 0 0 25px rgba(0, 0, 0, 0.3);
 }
 
-/* ====== Canvas 雷達圖元素 ====== */
+/* ====== 雷達圖底層 - 手機版 ====== */
+.radar-base {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* 背景圖片設置 */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("../../../Assets/image/index/profileSectionA_Mobile.png");
+  
+  /* 載入動畫設置 - 與PC版一致 */
+  opacity: 0;              /* 初始透明 */
+  transform: translateY(15%); /* 初始位置向下偏移15% */
+  transition: transform 0.8s ease, opacity 0.6s ease; /* 動畫過渡效果 */
+}
+
+/* ====== 雷達圖填充層 - 手機版 ====== */
+.radar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* 背景圖片設置 */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("../../../Assets/image/index/profileSectionB_Mobile.png");
+  
+  /* 載入動畫設置 - 與PC版一致 */
+  opacity: 0;              /* 初始透明 */
+  /* 填充層不需要位移動畫，只有透明度變化 */
+}
+
+/* ====== Canvas 雷達圖元素 - 手機版隱藏 ====== */
 #skillRadarChart {
-  /* 響應式尺寸 - 填滿容器但保留邊距 */
-  width: 100% !important;    /* 強制寬度100% */
-  height: 100% !important;   /* 強制高度100% */
-  max-width: 320px;          /* 最大寬度 */
-  max-height: 320px;         /* 最大高度 */
-  
-  /* 確保高質量渲染 */
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  
-  /* 觸控優化 */
-  touch-action: none;        /* 禁用觸控滾動 */
-  pointer-events: none;      /* 禁用指標事件，避免意外交互 */
-  
-  /* 圓角效果 */
-  border-radius: 50%;
-  
-  /* 動畫效果 */
-  transition: opacity 0.3s ease;
+  /* 手機版隱藏Canvas */
+  display: none;
 }
 
 /* ====== 載入狀態樣式 ====== */
