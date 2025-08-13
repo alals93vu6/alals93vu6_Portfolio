@@ -36,7 +36,9 @@
         <h2 class="section-title">網頁作品</h2>
         <div class="carousel">
             <div class="arrow" onclick="prev()">&#9664;</div>
-            <div class="thumbnails" id="thumbs"></div>
+            <div class="thumbnails-container">
+                <div class="thumbnails" id="thumbs"></div>
+            </div>
             <div class="arrow" onclick="next()">&#9654;</div>
         </div>
         <div class="info-panel" id="info"></div>
@@ -66,9 +68,20 @@
         ];
 
         let currentIndex = 0;
+        let scrollPosition = 0;
+        let thumbWidth = 0;
+        let visibleThumbs = 0;
 
         const thumbsDiv = document.getElementById('thumbs');
         const infoPanel = document.getElementById('info');
+
+        function calculateLayout() {
+            // 計算縮圖寬度和可見數量
+            thumbWidth = window.innerWidth <= 768 ? 
+                Math.min(window.innerWidth * 0.25, 120) : 100;
+            visibleThumbs = Math.floor((window.innerWidth - 80) / (thumbWidth + 12)); // 12是gap
+            visibleThumbs = Math.max(2, Math.min(visibleThumbs, data.length));
+        }
 
         function renderThumbs() {
             thumbsDiv.innerHTML = '';
@@ -87,6 +100,36 @@
                 div.onclick = () => select(i);
                 thumbsDiv.appendChild(div);
             });
+            
+            // 更新滑動位置以確保選中項目可見
+            updateScrollPosition();
+        }
+
+        function updateScrollPosition() {
+            const thumbsContainer = document.querySelector('.thumbnails');
+            if (!thumbsContainer) return;
+
+            // 確保當前選中的縮圖在可視範圍內
+            const thumbs = thumbsContainer.children;
+            if (thumbs.length === 0) return;
+
+            const thumbElement = thumbs[currentIndex];
+            const containerWidth = thumbsContainer.parentElement.offsetWidth;
+            const thumbRect = thumbElement.getBoundingClientRect();
+            const containerRect = thumbsContainer.parentElement.getBoundingClientRect();
+
+            // 如果選中項目不在可視範圍內，調整滾動位置
+            if (thumbRect.right > containerRect.right || thumbRect.left < containerRect.left) {
+                const thumbOffset = thumbElement.offsetLeft;
+                const centerOffset = containerWidth / 2 - thumbElement.offsetWidth / 2;
+                scrollPosition = -(thumbOffset - centerOffset);
+                
+                // 限制滾動範圍
+                const maxScroll = -(thumbsContainer.scrollWidth - containerWidth);
+                scrollPosition = Math.max(maxScroll, Math.min(0, scrollPosition));
+                
+                thumbsContainer.style.transform = `translateX(${scrollPosition}px)`;
+            }
         }
 
         function select(index, isInitial = false) {
@@ -147,8 +190,80 @@
             select(currentIndex);
         }
 
-        renderThumbs();
-        select(0, true);
+        // 觸控滑動支援
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let isDragging = false;
+        let startScrollPosition = 0;
+
+        function handleTouchStart(e) {
+            touchStartX = e.touches[0].clientX;
+            startScrollPosition = scrollPosition;
+            isDragging = true;
+        }
+
+        function handleTouchMove(e) {
+            if (!isDragging) return;
+            
+            touchEndX = e.touches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            const newPosition = startScrollPosition + deltaX;
+            
+            const thumbsContainer = document.querySelector('.thumbnails');
+            if (thumbsContainer) {
+                const maxScroll = -(thumbsContainer.scrollWidth - thumbsContainer.parentElement.offsetWidth);
+                const boundedPosition = Math.max(maxScroll, Math.min(0, newPosition));
+                thumbsContainer.style.transform = `translateX(${boundedPosition}px)`;
+            }
+        }
+
+        function handleTouchEnd(e) {
+            if (!isDragging) return;
+            
+            const deltaX = touchEndX - touchStartX;
+            const threshold = 50; // 滑動閾值
+            
+            if (Math.abs(deltaX) > threshold) {
+                if (deltaX > 0) {
+                    prev(); // 向右滑動，顯示前一個
+                } else {
+                    next(); // 向左滑動，顯示後一個
+                }
+            } else {
+                // 回彈到原位置
+                updateScrollPosition();
+            }
+            
+            isDragging = false;
+        }
+
+        // 初始化
+        function init() {
+            calculateLayout();
+            renderThumbs();
+            select(0, true);
+            
+            // 為縮圖容器添加觸控事件
+            const thumbsContainer = document.querySelector('.thumbnails-container');
+            if (thumbsContainer) {
+                thumbsContainer.addEventListener('touchstart', handleTouchStart, {passive: true});
+                thumbsContainer.addEventListener('touchmove', handleTouchMove, {passive: true});
+                thumbsContainer.addEventListener('touchend', handleTouchEnd, {passive: true});
+            }
+            
+            // 響應式更新
+            window.addEventListener('resize', () => {
+                calculateLayout();
+                updateScrollPosition();
+            });
+        }
+
+        // 等DOM加載完成後初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
     <div style="display: none;">
         <video src="Assets/image/htmlInfo/ListA_webM.webm" preload="auto"></video>
