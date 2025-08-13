@@ -41,12 +41,23 @@ async function SwitchPageAnimator() {
 }
 
 function HeroPageDetected() {
+    // 檢測當前設備類型
+    const isMobile = window.innerWidth < 768;
+    
     if (pageNumber == 1) {
         pageNumber++;
-        document.body.style.backgroundImage = "url('Assets/image/index/HeroPage_BackGroundB.png')";
+        // 根據設備類型選擇B圖片
+        const bgImageB = isMobile 
+            ? "url('Assets/image/index/HeroPage_BackGroundB_Mobile.png')"
+            : "url('Assets/image/index/HeroPage_BackGroundB.png')";
+        document.body.style.backgroundImage = bgImageB;
     } else {
         pageNumber = 1;
-        document.body.style.backgroundImage = "url('Assets/image/index/HeroPage_BackGroundA.png')";
+        // 根據設備類型選擇A圖片
+        const bgImageA = isMobile 
+            ? "url('Assets/image/index/HeroPage_BackGroundA_Mobile.png')"
+            : "url('Assets/image/index/HeroPage_BackGroundA.png')";
+        document.body.style.backgroundImage = bgImageA;
     }
     IntroduceDetected(pageNumber);
 }

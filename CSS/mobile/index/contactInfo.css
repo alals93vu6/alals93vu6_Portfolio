@@ -12,12 +12,12 @@
    ======================================================================== */
 
 /* ====== 聯絡資訊區主容器 ====== */
-#contactInfo {
+#ContactInfo {
   position: relative;
   width: 100%;
   min-height: auto;         /* 手機版使用自動高度 */
   padding: 0 1rem;          /* 移除上下padding，只保留左右1rem內距 */
-  background-color: rgb(65, 65, 65); /* 中灰色背景，區別於其他區塊 */
+  background-color: rgb(0, 0, 0); /* 黑色背景 */
   color: white;             /* 白色文字 */
 
   /* Flexbox 佈局 - 手機版單欄設計 */
@@ -56,6 +56,11 @@
   background-color: rgba(255, 255, 255, 0.08); /* 淡背景 */
   border: 1px solid rgba(255, 255, 255, 0.15); /* 淡邊框 */
   border-radius: 8px;       /* 圓角 */
+  
+  /* 確保寬度一致 */
+  width: 100%;              /* 充滿父容器寬度 */
+  max-width: 100%;          /* 最大寬度限制 */
+  box-sizing: border-box;   /* 包含padding和border在寬度內 */
   
   /* 內距和間距 */
   padding: 1.5rem;          /* 內距 */
@@ -186,7 +191,7 @@
 
 /* 小尺寸手機適配 (寬度 < 375px) */
 @media (max-width: 374px) {
-  #contactInfo {
+  #ContactInfo {
     padding: 1.5rem 0.5rem;  /* 更緊湊的內距 */
     gap: 1rem;               /* 減少間距 */
   }
@@ -248,7 +253,7 @@
 
 /* 橫屏模式適配 */
 @media (orientation: landscape) and (max-height: 500px) {
-  #contactInfo {
+  #ContactInfo {
     padding: 1rem;           /* 減少內距適應橫屏 */
     min-height: auto;        /* 移除最小高度 */
   }

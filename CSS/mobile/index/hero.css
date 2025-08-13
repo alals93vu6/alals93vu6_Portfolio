@@ -24,11 +24,11 @@ body {
     padding: 0;
     
     /* 背景圖片設置 - 手機版優化 */
-    background-image: url("../../../Assets/image/index/HeroPage_BackGroundA.png");
+    background-image: url("../../../Assets/image/index/HeroPage_BackGroundA_Mobile.png");
     background-repeat: no-repeat;
     background-size: cover;           /* 覆蓋整個視窗 */
-    background-position: center center; /* 背景圖片居中 */
-    background-attachment: scroll;    /* 手機版使用scroll避免iOS問題 */
+    background-position: center center; /* 手機版專用圖片，居中顯示 */
+    background-attachment: fixed;     /* 固定背景，與桌面版一致 */
     background-color: black;          /* 背景色作為fallback */
     
     overflow-x: hidden; /* 隱藏水平滾動條 */
@@ -100,12 +100,12 @@ body {
     text-align: center;       /* 手機版文字居中 */
     z-index: 10;             /* 確保在背景遮罩之上 */
     
-    /* 背景遮罩提升可讀性 */
+    /* 背景遮罩提升可讀性 - 加深20%讓文字更明顯 */
     background: linear-gradient(
         to top,
-        rgba(0, 0, 0, 0.8) 0%,    /* 底部較深 */
-        rgba(0, 0, 0, 0.4) 50%,   /* 中間適中 */
-        rgba(0, 0, 0, 0.1) 100%   /* 頂部較淡 */
+        rgba(0, 0, 0, 0.9) 0%,    /* 底部更深 (0.8→0.9) */
+        rgba(0, 0, 0, 0.6) 50%,   /* 中間更深 (0.4→0.6) */
+        rgba(0, 0, 0, 0.3) 100%   /* 頂部更深 (0.1→0.3) */
     );
     
     /* 佈局和間距 */

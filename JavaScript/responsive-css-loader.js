@@ -67,12 +67,36 @@
      * @param {string} deviceType - 設備類型
      */
     function preloadCriticalImages(deviceType) {
-        const images = [
-            'Assets/image/index/HeroPage_BackGroundA.png',
+        // 根據設備類型選擇對應的圖片
+        const baseImages = [
             'Assets/image/index/SpinePage.png',
             'Assets/image/index/webPage.png',
             'Assets/image/index/UnityPage.png'
         ];
+        
+        // ProfileSection背景圖片根據設備類型選擇
+        const profileImages = deviceType === 'mobile' 
+            ? [
+                'Assets/image/index/profileSectionA_Mobile.png',
+                'Assets/image/index/profileSectionB_Mobile.png'
+              ]
+            : [
+                'Assets/image/index/profileSectionA.png',
+                'Assets/image/index/profileSectionB.png'
+              ];
+        
+        // Hero背景圖片根據設備類型選擇（包含A和B兩張）
+        const heroImages = deviceType === 'mobile' 
+            ? [
+                'Assets/image/index/HeroPage_BackGroundA_Mobile.png',
+                'Assets/image/index/HeroPage_BackGroundB_Mobile.png'
+              ]
+            : [
+                'Assets/image/index/HeroPage_BackGroundA.png',
+                'Assets/image/index/HeroPage_BackGroundB.png'
+              ];
+        
+        const images = [...heroImages, ...profileImages, ...baseImages];
         
         images.forEach(src => {
             const img = new Image();

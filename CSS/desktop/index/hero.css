@@ -22,7 +22,8 @@
 /* ====== 頁面主體背景設置 ====== */
 body {
     margin: 0;
-    padding: 0;
+    /* 為固定導航列留出空間 - 配合60px高度 */
+    padding-top: 60px;
     
     /* 背景圖片設置 - 桌面版使用fixed attachment獲得視差效果 */
     background-image: url("../../../Assets/image/index/HeroPage_BackGroundA.png");
