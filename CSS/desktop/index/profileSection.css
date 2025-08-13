@@ -66,7 +66,7 @@
   background-size: contain; /* 保持圖片比例，完整顯示 */
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url("../../Assets/image/index/profileSectionA.png");
+  background-image: url("../../../Assets/image/index/profileSectionA.png");
   
   /* 載入動畫設置 */
   opacity: 0;              /* 初始透明 */
@@ -90,12 +90,13 @@
   background-size: contain; /* 保持圖片比例，完整顯示 */
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url("../../Assets/image/index/profileSectionB.png");
+  background-image: url("../../../Assets/image/index/profileSectionB.png");
   
   /* 載入動畫設置 */
   opacity: 0;              /* 初始透明 */
   /* 填充層不需要位移動畫，只有透明度變化 */
 }
+
 
 /* 
    JavaScript 動畫觸發類別

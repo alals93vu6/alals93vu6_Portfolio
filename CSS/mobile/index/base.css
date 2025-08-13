@@ -1,0 +1,223 @@
+/* ========================================================================
+   手機版基礎樣式 - Mobile Base Styles
+   ======================================================================== 
+   
+   用途: 手機版的基礎樣式，包含:
+   - HTML/Body 基礎重置
+   - 手機版導航欄 (漢堡選單)
+   - 回到頂部按鈕優化
+   - 觸控友好的互動元素
+   
+   針對螢幕寬度 < 768px 設計
+   ======================================================================== */
+
+/* ====== 基礎重置樣式 ====== */
+html {
+    scroll-behavior: smooth; /* 平滑滾動效果 */
+    font-size: 16px;         /* 手機版基礎字體大小 */
+}
+
+/* ====== 回到頂部按鈕 - 手機版隱藏 ====== */
+#backToTop {
+    /* 手機版不需要返回頂端按鈕，用戶可以直接滑動到頂部 */
+    display: none;
+}
+
+/* 回到頂部按鈕懸停/觸控效果 - 已隱藏，移除樣式 */
+/* #backToTop:hover,
+#backToTop:active {
+    opacity: 1;
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.95);
+} */
+
+/* ====== 手機版導航欄 ====== */
+.navbar {
+    /* 定位和尺寸 */
+    position: fixed;         /* 固定在頂部 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;            /* 高層級確保在內容之上 */
+    
+    /* 樣式設置 */
+    background-color: #313131; /* 深灰色背景 */
+    color: white;
+    padding: 0.8rem 1rem;    /* 手機版緊湊內距 */
+    
+    /* Flexbox 佈局 */
+    display: flex;
+    justify-content: space-between; /* 左右分佈 */
+    align-items: center;     /* 垂直居中 */
+    
+    /* 陰影效果 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 導航欄 Logo 區域 - 手機版 */
+.navbar .logo {
+    display: flex;
+    align-items: center;     /* 垂直居中對齊 */
+    gap: 0.5rem;            /* Logo圖片和文字間距 */
+    font-weight: bold;
+    font-size: 1.3rem;      /* 手機版適中字體 */
+}
+
+/* Logo 圖片樣式 - 手機版 */
+.logo-img {
+    width: 35px;            /* 手機版較小尺寸 */
+    height: 35px;           /* 保持正方形 */
+    object-fit: cover;      /* 保持比例填充 */
+    border-radius: 6px;     /* 圓角效果 */
+}
+
+/* ====== 漢堡選單按鈕 ====== */
+.hamburger-menu {
+    display: flex;
+    flex-direction: column;  /* 垂直排列線條 */
+    justify-content: space-around; /* 均勻分佈 */
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    
+    /* 觸控友好的點擊區域 */
+    touch-action: manipulation;
+}
+
+/* 漢堡選單線條 */
+.hamburger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease; /* 動畫效果 */
+    transform-origin: center;
+}
+
+/* 漢堡選單開啟時的動畫 */
+.hamburger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+    opacity: 0;             /* 中間線條消失 */
+}
+
+.hamburger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* ====== 手機版導航選單 ====== */
+.nav-links {
+    /* 初始隱藏 */
+    position: fixed;
+    top: 60px;              /* 導航欄下方 */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px); /* 剩餘視窗高度 */
+    
+    /* 背景和樣式 */
+    background-color: rgba(49, 49, 49, 0.98); /* 半透明背景 */
+    backdrop-filter: blur(10px); /* 背景模糊 */
+    
+    /* 布局 */
+    display: flex;
+    flex-direction: column;  /* 垂直排列 */
+    justify-content: flex-start; /* 從頂部開始 */
+    align-items: center;     /* 水平居中 */
+    padding-top: 2rem;      /* 頂部間距 */
+    gap: 1.5rem;           /* 選項間距 */
+    
+    /* 動畫效果 */
+    transform: translateX(-100%); /* 初始向左隱藏 */
+    transition: transform 0.3s ease;
+    
+    /* 滾動設置 */
+    overflow-y: auto;       /* 允許垂直滾動 */
+}
+
+/* 導航選單顯示狀態 */
+.nav-links.active {
+    transform: translateX(0); /* 滑入顯示 */
+}
+
+/* 導航連結樣式 - 手機版 */
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;      /* 手機版較大字體 */
+    font-weight: 500;
+    padding: 1rem 2rem;     /* 觸控友好的內距 */
+    border-radius: 8px;     /* 圓角 */
+    width: 80%;             /* 大部分寬度 */
+    text-align: center;     /* 文字居中 */
+    
+    /* 背景效果 */
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* 動畫效果 */
+    transition: all 0.3s ease;
+    
+    /* 觸控優化 */
+    touch-action: manipulation;
+}
+
+/* 導航連結懸停/觸控效果 */
+.nav-links a:hover,
+.nav-links a:active {
+    background-color: rgba(255, 255, 255, 0.15); /* 加深背景 */
+    border-color: rgba(255, 255, 255, 0.3);      /* 加深邊框 */
+    transform: translateY(-2px); /* 輕微上移 */
+}
+
+/* ====== 主要內容區域適配 ====== */
+/* 為固定導航欄留出空間 */
+body {
+    padding-top: 60px;      /* 導航欄高度 */
+}
+
+/* ====== 手機版響應式文字 ====== */
+/* 基礎文字大小調整 */
+body {
+    font-size: 0.9rem;      /* 手機版基礎字體 */
+    line-height: 1.5;       /* 提高行高增加可讀性 */
+}
+
+/* ====== 觸控友好優化 ====== */
+/* 所有可點擊元素的觸控優化 */
+button, a, .clickable {
+    min-height: 44px;       /* iOS 建議的最小觸控區域 */
+    min-width: 44px;
+    touch-action: manipulation; /* 禁用雙擊縮放 */
+}
+
+/* ====== 手機版載入動畫 ====== */
+.css-loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.content-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.content-visible {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}

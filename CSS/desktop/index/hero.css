@@ -25,7 +25,7 @@ body {
     padding: 0;
     
     /* 背景圖片設置 - 桌面版使用fixed attachment獲得視差效果 */
-    background-image: url("../../Assets/image/index/HeroPage_BackGroundA.png");
+    background-image: url("../../../Assets/image/index/HeroPage_BackGroundA.png");
     background-repeat: no-repeat;
     background-size: cover;           /* 覆蓋整個視窗 */
     background-position: right center; /* 背景圖片偏右置中 */
@@ -212,3 +212,4 @@ body {
 .fade.show {
     opacity: 1;              /* 完全顯示 */
 }
+

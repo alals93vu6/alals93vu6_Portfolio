@@ -3,22 +3,43 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>網頁作品集</title>
-    <link rel="stylesheet" href="CSS/index.css">
-    <link rel="stylesheet" href="CSS/index_hero.css">
-    <link rel="stylesheet" href="CSS/index_profileSection.css">
-    <link rel="stylesheet" href="CSS/index_totalWorks.css">
-    <link rel="stylesheet" href="CSS/index_ContactInfo.css">
+    
+    <!-- 響應式CSS載入器基礎樣式 -->
+    <link rel="stylesheet" href="CSS/responsive-loader.css">
+    
+    <!-- 緊急fallback CSS - 防止黑屏 -->
+    <link rel="stylesheet" href="CSS/desktop/index/base.css" id="fallback-base">
+    <link rel="stylesheet" href="CSS/desktop/index/hero.css" id="fallback-hero">
+    
+    <!-- 響應式CSS動態載入系統 -->
+    <script src="JavaScript/responsive-css-loader.js"></script>
+    
+    <!-- 關鍵圖片預載入 - 暫時移除以加快初始載入 -->
+    <!-- <link rel="preload" href="Assets/image/index/HeroPage_BackGroundA.png" as="image">
+    <link rel="preload" href="Assets/image/index/SpinePage.png" as="image">
+    <link rel="preload" href="Assets/image/index/webPage.png" as="image">
+    <link rel="preload" href="Assets/image/index/UnityPage.png" as="image"> -->
+    
     <link rel="icon" href="Assets/image/index/logotest.png" type="image/png">
 </head>
 
 <body>
     <header class="navbar">
         <div class="logo">
-            <img src="Assets/image//index/logotest.png" alt="Logo" class="logo-img">
+            <img src="Assets/image/index/logotest.png" alt="Logo" class="logo-img">
             <span>作品集</span>
         </div>
+        
+        <!-- 手機版漢堡選單按鈕 -->
+        <button class="hamburger-menu" aria-label="切換導航選單">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <!-- 導航選單 -->
         <nav class="nav-links">
             <a href="#profileSection">擅長技能</a>
             <a href="#totalWorks">作品瀏覽</a>
@@ -100,12 +121,14 @@
             </ul>
         </div>
     </div>
+    <!-- 手機版導航控制器 -->
+    <script src="JavaScript/mobile-navigation.js"></script>
+    
+    <!-- 主要功能腳本 -->
     <script type="module" src="JavaScript/index/IndexManager.js"></script>
+    
+    <!-- 頁面滾動功能 -->
     <script>
-        if (window.innerWidth < 768) {
-            alert("建議使用電腦觀看完整體驗，手機版專屬頁面即將上線！");
-        }
-
         window.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const scrollTo = params.get('scrollTo');

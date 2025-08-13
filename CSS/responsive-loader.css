@@ -1,103 +1,69 @@
 /* ========================================================================
-   響應式CSS載入器 - Responsive CSS Loader
-   ======================================================================== 
+   響應式CSS載入器基礎樣式 - Responsive CSS Loader Base Styles
+   ========================================================================
    
-   用途: 基礎通用樣式，在所有設備上都會載入
-   包含:
-   - CSS變數定義
-   - 字體設置
-   - 基本重置樣式
+   用途: 響應式CSS動態載入系統的基礎樣式
+   包含載入指示器和基本重置樣式
    
-   注意: 此文件會在JavaScript動態載入desktop或mobile CSS之前先載入
    ======================================================================== */
-
-/* ====== CSS變數定義 ====== */
-:root {
-  /* 色彩變數 */
-  --text-color: #ffffff;
-  --bg-primary: #000000;
-  --bg-secondary: #111111;  
-  --bg-tertiary: #414141;
-  --accent-color: #ffd369;
-  --link-color: #cdeaff;
-  
-  /* 間距變數 */
-  --space-xs: 0.5rem;
-  --space-sm: 1rem;
-  --space-md: 2rem;
-  --space-lg: 3rem;
-  --space-xl: 5rem;
-  
-  /* 字體變數 */
-  --font-family-primary: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
-  --font-family-display: 'Noto Sans TC', sans-serif;
-  
-  /* 邊框變數 */
-  --border-radius: 8px;
-  --border-radius-large: 12px;
-  
-  /* 過渡動畫 */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
-}
 
 /* ====== 基礎重置樣式 ====== */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
+    font-size: 16px;
 }
 
 body {
-  font-family: var(--font-family-primary);
-  color: var(--text-color);
-  background-color: var(--bg-primary);
-  line-height: 1.6;
-  overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans TC', sans-serif, system-ui, -apple-system;
+    background-color: rgb(17, 17, 17);
+    color: white;
+    overflow-x: hidden;
 }
 
-/* ====== 載入指示器 ====== */
+/* ====== CSS載入指示器 ====== */
 .css-loading {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  color: var(--text-color);
-  font-size: 1.2rem;
-  text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    text-align: center;
+    
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    
+    animation: pulse 1.5s ease-in-out infinite;
 }
 
-.css-loading::after {
-  content: "";
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--accent-color);
-  border-top: 2px solid transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-left: 10px;
+@keyframes pulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* ====== 隱藏未載入的內容 ====== */
+/* ====== 內容隱藏/顯示狀態 ====== */
 .content-hidden {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
 .content-visible {
-  opacity: 1;
-  visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease;
 }

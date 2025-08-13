@@ -1,0 +1,294 @@
+/* ========================================================================
+   手機版Hero區塊樣式 - Mobile Hero Section Styles
+   ======================================================================== 
+   
+   用途: 手機版首頁Hero區塊的樣式，包含:
+   - 垂直排列佈局 (背景圖片 + 文字內容)
+   - 觸控友好的文字大小和間距
+   - 手機版背景圖片適配
+   - 響應式文字縮放
+   
+   針對螢幕寬度 < 768px 的垂直佈局優化
+   ======================================================================== */
+
+/* ====== 基礎重置樣式 ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 確保padding和border包含在元素總寬度內 */
+}
+
+/* ====== 頁面主體背景設置 ====== */
+body {
+    margin: 0;
+    padding: 0;
+    
+    /* 背景圖片設置 - 手機版優化 */
+    background-image: url("../../../Assets/image/index/HeroPage_BackGroundA.png");
+    background-repeat: no-repeat;
+    background-size: cover;           /* 覆蓋整個視窗 */
+    background-position: center center; /* 背景圖片居中 */
+    background-attachment: scroll;    /* 手機版使用scroll避免iOS問題 */
+    background-color: black;          /* 背景色作為fallback */
+    
+    overflow-x: hidden; /* 隱藏水平滾動條 */
+}
+
+/* ====== Hero主容器 ====== */
+#HEROpage {
+    height: 100vh;    /* 強制全螢幕高度 */
+    width: 100%;
+    position: relative; /* 為子元素提供定位參考點 */
+    min-height: 600px;  /* 最小高度確保內容可見 */
+}
+
+/* Hero區塊載入時的遮罩效果 */
+.bg-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 1;               /* 初始完全不透明 */
+    z-index: 500;            /* 高層級確保在內容之上 */
+    transition: opacity 3s ease; /* 3秒淡出動畫 */
+    pointer-events: none;     /* 不阻擋滑鼠事件 */
+}
+
+/* ====== Hero內容區佈局 - 手機版垂直排列 ====== */
+/* 
+   手機版採用垂直排列設計:
+   - 上半部: 背景圖片展示區域
+   - 下半部: 文字內容區域
+   - 使用Flexbox實現垂直分配
+*/
+.hero-wrapper {
+    /* Flexbox 垂直佈局 */
+    display: flex;
+    flex-direction: column;   /* 垂直排列 */
+    
+    width: 100%;              /* 充滿整個螢幕寬度 */
+    height: 100vh;            /* 容器高度與主容器一致 */
+    min-height: 600px;        /* 最小高度確保內容可讀性 */
+    
+    /* 響應式安全邊距 */
+    padding: 0 1rem;          /* 左右邊距 */
+    box-sizing: border-box;
+    
+    /* 垂直分配比例:
+       - 上半部 (背景展示): 55%
+       - 下半部 (文字內容): 45% */
+    justify-content: flex-end; /* 內容靠底部對齊 */
+}
+
+/* Hero背景展示區域 (虛擬元素) */
+.hero-wrapper::before {
+    content: '';
+    flex: 1.2;               /* 佔據較大比例 (約55%) */
+    min-height: 200px;       /* 最小高度確保背景可見 */
+    /* 這個區域主要給背景圖片使用，不放置內容 */
+}
+
+/* ====== Hero文字內容區域 ====== */
+.hero-text {
+    /* Flexbox 設置 */
+    flex: 1;                 /* 佔據剩餘空間 (約45%) */
+    
+    /* 文字樣式 */
+    color: white;
+    text-align: center;       /* 手機版文字居中 */
+    z-index: 10;             /* 確保在背景遮罩之上 */
+    
+    /* 背景遮罩提升可讀性 */
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.8) 0%,    /* 底部較深 */
+        rgba(0, 0, 0, 0.4) 50%,   /* 中間適中 */
+        rgba(0, 0, 0, 0.1) 100%   /* 頂部較淡 */
+    );
+    
+    /* 佈局和間距 */
+    display: flex;
+    flex-direction: column;   /* 垂直排列標題、段落、按鈕 */
+    justify-content: center;  /* 垂直居中對齊 */
+    align-items: center;      /* 水平居中對齊 */
+    
+    /* 響應式內距 */
+    padding: 2rem 1rem;       /* 上下較大內距 */
+    
+    /* 確保文字容器有足夠空間，避免被裁切 */
+    min-height: 250px;        /* 最小高度確保內容可見 */
+    overflow-wrap: break-word; /* 長文字自動換行 */
+    word-break: break-word;   /* 強制換行避免溢出 */
+}
+
+/* Hero標題樣式 - 手機版優化 */
+.hero-text h1 {
+    /* 手機版字體大小 - 考慮觸控設備的可讀性 */
+    font-size: clamp(2rem, 8vw, 3.5rem); /* 響應式字體，最小2rem最大3.5rem */
+    font-weight: bold;
+    
+    /* 間距設置 */
+    margin-bottom: clamp(1rem, 4vw, 1.5rem); /* 響應式下邊距 */
+    
+    line-height: 1.1;         /* 緊湊行高適合大標題 */
+    
+    /* 文字效果 */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); /* 陰影增加可讀性 */
+    letter-spacing: 1px;      /* 字母間距 */
+    
+    /* 確保標題在各種螢幕下都能完整顯示 */
+    overflow-wrap: break-word;
+    hyphens: auto;           /* 自動連字符 */
+    
+    /* 動畫效果 */
+    opacity: 0;              /* 初始隱藏，由JavaScript控制顯示 */
+    transition: opacity 0.6s ease;
+}
+
+/* Hero描述段落樣式 - 手機版優化 */
+.hero-text p {
+    /* 手機版字體大小 */
+    font-size: clamp(1rem, 4vw, 1.4rem); /* 響應式字體，最小1rem最大1.4rem */
+    
+    line-height: 1.6;        /* 較寬鬆行高提升可讀性 */
+    
+    /* 間距設置 */
+    margin-bottom: clamp(1.5rem, 5vw, 2rem); /* 響應式下邊距 */
+    
+    /* 文字效果 */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8); /* 陰影增加可讀性 */
+    
+    /* 文字流暢性 */
+    text-align: center;      /* 手機版居中對齊 */
+    overflow-wrap: break-word;
+    
+    /* 最大寬度限制確保可讀性 */
+    max-width: 90%;          /* 限制最大寬度 */
+    
+    /* 動畫效果 */
+    opacity: 0;              /* 初始隱藏，由JavaScript控制顯示 */
+    transition: opacity 0.6s ease;
+}
+
+/* ====== "了解更多"連結樣式 - 手機版優化 ====== */
+.more-link {
+    /* 佈局設置 */
+    display: inline-block;
+    margin-top: clamp(1rem, 4vw, 1.5rem); /* 響應式上邊距 */
+    
+    /* 樣式設置 */
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: clamp(1rem, 4vw, 1.3rem); /* 響應式字體大小 */
+    font-weight: bold;
+    
+    /* 視覺效果 - 手機版觸控友好 */
+    opacity: 0.9;            /* 初始透明度 */
+    padding: 0.8rem 1.8rem;  /* 較大內距增加觸控區域 */
+    border: 2px solid rgba(255, 255, 255, 0.6); /* 明顯邊框 */
+    border-radius: 25px;     /* 更圓潤的邊角 */
+    
+    /* 背景效果 */
+    background-color: rgba(255, 255, 255, 0.1); /* 淡背景 */
+    backdrop-filter: blur(5px); /* 背景模糊效果 */
+    
+    /* 陰影效果 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    
+    /* 動畫效果 */
+    transition: all 0.3s ease; /* 所有屬性的平滑變化 */
+    
+    /* 觸控優化 */
+    touch-action: manipulation; /* 禁用雙擊縮放 */
+    min-height: 44px;        /* iOS建議的最小觸控區域 */
+    min-width: 120px;        /* 最小寬度確保易點擊 */
+    
+    /* 動畫效果 */
+    opacity: 0;              /* 初始隱藏，由JavaScript控制顯示 */
+}
+
+/* "了解更多"連結觸控效果 */
+.more-link:hover,
+.more-link:active {
+    opacity: 1;              /* 完全不透明 */
+    background-color: rgba(255, 255, 255, 0.2); /* 加深背景 */
+    border-color: rgba(255, 255, 255, 0.8); /* 加深邊框 */
+    transform: translateY(-2px); /* 輕微上移效果 */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); /* 加深陰影 */
+}
+
+/* "了解更多"連結按下效果 */
+.more-link:active {
+    transform: translateY(0px); /* 按下時回到原位 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* 減少陰影 */
+}
+
+/* ====== 淡入動畫類別 ====== */
+/* 用於JavaScript控制的淡入效果 */
+.fade {
+    opacity: 0;              /* 初始透明 */
+    transition: opacity 0.6s ease; /* 淡入動畫持續時間 */
+}
+
+/* 淡入動畫的顯示狀態 */
+.fade.show {
+    opacity: 1;              /* 完全顯示 */
+}
+
+/* ====== 手機版特殊適配 ====== */
+
+/* 小尺寸手機適配 (寬度 < 375px) */
+@media (max-width: 374px) {
+    .hero-text {
+        padding: 1.5rem 0.5rem; /* 更緊湊的內距 */
+        min-height: 200px;      /* 減少最小高度 */
+    }
+    
+    .hero-text h1 {
+        font-size: clamp(1.8rem, 10vw, 2.5rem); /* 更小的字體範圍 */
+        margin-bottom: 0.8rem;  /* 減少間距 */
+    }
+    
+    .hero-text p {
+        font-size: clamp(0.9rem, 5vw, 1.2rem); /* 更小的字體範圍 */
+        margin-bottom: 1.2rem;  /* 減少間距 */
+        line-height: 1.5;       /* 調整行高 */
+    }
+    
+    .more-link {
+        padding: 0.6rem 1.4rem; /* 減少內距 */
+        font-size: clamp(0.9rem, 4vw, 1.1rem); /* 更小字體 */
+    }
+}
+
+/* 橫屏模式適配 */
+@media (orientation: landscape) and (max-height: 500px) {
+    .hero-wrapper {
+        height: 100vh;
+        min-height: 400px;      /* 降低最小高度 */
+    }
+    
+    .hero-wrapper::before {
+        flex: 0.8;              /* 減少背景區域比例 */
+        min-height: 150px;      /* 降低最小高度 */
+    }
+    
+    .hero-text {
+        flex: 1.2;              /* 增加文字區域比例 */
+        min-height: 200px;      /* 降低最小高度 */
+        padding: 1rem;          /* 減少內距 */
+    }
+    
+    .hero-text h1 {
+        font-size: clamp(1.5rem, 6vw, 2.5rem); /* 橫屏字體調整 */
+        margin-bottom: 0.8rem;
+    }
+    
+    .hero-text p {
+        font-size: clamp(0.9rem, 3vw, 1.2rem); /* 橫屏字體調整 */
+        margin-bottom: 1rem;
+    }
+}

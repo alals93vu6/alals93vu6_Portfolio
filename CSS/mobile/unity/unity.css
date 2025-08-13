@@ -1,0 +1,483 @@
+/* ========================================================================
+   手機版Unity作品頁面樣式 - Mobile Unity Works Page Styles
+   ======================================================================== 
+   
+   用途: 手機版Unity作品展示頁面的樣式，包含:
+   - 手機版導航欄
+   - 響應式作品網格佈局
+   - 觸控友好的作品卡片
+   - 手機版背景和互動優化
+   
+   針對螢幕寬度 < 768px 設計
+   ======================================================================== */
+
+/* ====== 基礎重置樣式 ====== */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif;
+  background-color: rgb(17, 17, 17);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: auto;         /* 手機版允許垂直滾動 */
+  
+  /* 手機版基礎字體 */
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ====== 手機版導航欄 ====== */
+.navbar {
+  position: fixed;          /* 固定在頂部 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  
+  background-color: #313131;
+  color: white;
+  padding: 0.8rem 1rem;     /* 緊湊內距 */
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Logo 區域 */
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.logo-img {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* 漢堡選單按鈕 */
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  touch-action: manipulation;
+}
+
+.hamburger-menu span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* 漢堡選單開啟動畫 */
+.hamburger-menu.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* 導航選單 */
+.nav-links {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 60px);
+  
+  background-color: rgba(49, 49, 49, 0.98);
+  backdrop-filter: blur(10px);
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 2rem;
+  gap: 1.5rem;
+  
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.nav-links.active {
+  transform: translateX(0);
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  width: 80%;
+  text-align: center;
+  
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  touch-action: manipulation;
+}
+
+.nav-links a:hover,
+.nav-links a:active {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ====== 主要內容區域 ====== */
+/* 為固定導航欄留出空間 */
+body {
+  padding-top: 60px;
+}
+
+/* ====== 頁面容器 ====== */
+.page-container {
+  min-height: calc(100vh - 60px);
+  background-color: rgb(17, 17, 17);
+  color: white;
+  padding: 1rem;
+}
+
+/* ====== 頁面標題 ====== */
+.page-title {
+  text-align: center;
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: bold;
+  margin: 2rem 0;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+  letter-spacing: 1px;
+}
+
+/* ====== 作品網格容器 ====== */
+.works-grid {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0;
+  
+  /* 手機版網格佈局 */
+  display: grid;
+  grid-template-columns: 1fr;  /* 單欄佈局 */
+  gap: 1.5rem;
+  
+  /* 針對稍大的手機螢幕 */
+  @media (min-width: 480px) {
+    grid-template-columns: repeat(2, 1fr); /* 雙欄佈局 */
+    gap: 1rem;
+  }
+}
+
+/* ====== 作品卡片 ====== */
+.work-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  
+  /* 觸控優化 */
+  touch-action: manipulation;
+  min-height: 200px;
+}
+
+.work-card:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ====== 作品連結 ====== */
+.work-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+/* ====== 作品圖片區域 ====== */
+.work-image-container {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.work-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.work-card:hover .work-image {
+  transform: scale(1.05);
+}
+
+/* 作品影片 */
+.work-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.work-card:hover .work-video {
+  opacity: 1;
+}
+
+/* ====== 作品資訊區域 ====== */
+.work-info {
+  padding: 1rem;
+}
+
+.work-title {
+  font-size: clamp(1.1rem, 4vw, 1.3rem);
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: white;
+  overflow-wrap: break-word;
+  text-align: center;
+}
+
+.work-description {
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  text-align: center;
+  
+  /* 限制行數避免卡片高度不一 */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ====== 載入狀態 ====== */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+  grid-column: 1 / -1;      /* 佔據整行 */
+}
+
+/* ====== 手機版特殊適配 ====== */
+
+/* 小尺寸手機適配 (寬度 < 375px) */
+@media (max-width: 374px) {
+  .page-container {
+    padding: 0.5rem;
+  }
+  
+  .page-title {
+    font-size: clamp(1.8rem, 9vw, 2.5rem);
+    margin: 1.5rem 0;
+  }
+  
+  .works-grid {
+    max-width: 95%;
+    gap: 1rem;
+  }
+  
+  .work-card {
+    min-height: 180px;
+  }
+  
+  .work-image-container {
+    height: 120px;
+  }
+  
+  .work-info {
+    padding: 0.8rem;
+  }
+  
+  .work-title {
+    font-size: clamp(1rem, 5vw, 1.2rem);
+    margin-bottom: 0.3rem;
+  }
+  
+  .work-description {
+    font-size: clamp(0.8rem, 4vw, 0.9rem);
+    -webkit-line-clamp: 2;    /* 減少行數 */
+  }
+}
+
+/* 中等尺寸手機適配 (375px - 479px) */
+@media (min-width: 375px) and (max-width: 479px) {
+  .works-grid {
+    max-width: 95%;
+  }
+  
+  .work-image-container {
+    height: 140px;
+  }
+}
+
+/* 大尺寸手機適配 (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .works-grid {
+    max-width: 550px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .work-card {
+    min-height: 220px;
+  }
+  
+  .work-image-container {
+    height: 120px;
+  }
+  
+  .work-info {
+    padding: 1rem;
+  }
+  
+  .work-title {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    margin-bottom: 0.5rem;
+  }
+  
+  .work-description {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    -webkit-line-clamp: 3;
+  }
+}
+
+/* 橫屏模式適配 */
+@media (orientation: landscape) and (max-height: 500px) {
+  .page-title {
+    margin: 1rem 0;
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+  }
+  
+  .works-grid {
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr); /* 橫屏時強制雙欄 */
+  }
+  
+  .work-card {
+    min-height: 160px;
+  }
+  
+  .work-image-container {
+    height: 100px;
+  }
+  
+  .work-info {
+    padding: 0.8rem;
+  }
+  
+  .work-description {
+    -webkit-line-clamp: 2;
+  }
+}
+
+/* ====== 觸控回饋動畫 ====== */
+@keyframes touchFeedback {
+  0% { 
+    transform: scale(1); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  50% { 
+    transform: scale(0.98); 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  100% { 
+    transform: scale(1.02); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.work-card:active {
+  animation: touchFeedback 0.2s ease-out;
+}
+
+/* ====== 空狀態樣式 ====== */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  grid-column: 1 / -1;
+}
+
+.empty-state h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.empty-state p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ====== 可訪問性優化 ====== */
+@media (prefers-reduced-motion: reduce) {
+  .work-card,
+  .work-image,
+  .work-video,
+  .hamburger-menu span,
+  .nav-links {
+    transition: none;
+    animation: none;
+  }
+  
+  .work-card:hover {
+    transform: none;
+  }
+  
+  .work-card:hover .work-image {
+    transform: none;
+  }
+}
+
+/* ====== 高對比度模式支援 ====== */
+@media (prefers-contrast: high) {
+  .work-card {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .work-title {
+    color: #ffffff;
+  }
+  
+  .work-description {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
