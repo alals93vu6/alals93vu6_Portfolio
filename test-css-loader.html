@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Loader Test</title>
+    <link rel="stylesheet" href="CSS/responsive-loader.css">
+</head>
+<body>
+    <div style="padding: 2rem; text-align: center;">
+        <h1>動態CSS載入測試</h1>
+        <p>當前螢幕寬度: <span id="width"></span>px</p>
+        <p>檢測到的設備類型: <span id="device-type"></span></p>
+        <p>載入狀態: <span id="loading-status"></span></p>
+        <button onclick="testReload()">強制重新載入CSS</button>
+    </div>
+
+    <script src="JavaScript/responsive-css-loader.js"></script>
+    <script src="debug-css-loader.js"></script>
+    <script>
+        function updateInfo() {
+            document.getElementById('width').textContent = window.innerWidth;
+            if (window.ResponsiveCSSLoader) {
+                document.getElementById('device-type').textContent = window.ResponsiveCSSLoader.getCurrentDeviceType() || '檢測中...';
+                document.getElementById('loading-status').textContent = window.ResponsiveCSSLoader.isLoading() ? '載入中' : '已完成';
+            }
+        }
+
+        function testReload() {
+            if (window.ResponsiveCSSLoader) {
+                window.ResponsiveCSSLoader.forceReload();
+                setTimeout(updateInfo, 1000);
+            }
+        }
+
+        // 初始更新
+        setTimeout(updateInfo, 1000);
+        
+        // 監聽窗口大小變化
+        window.addEventListener('resize', () => {
+            setTimeout(updateInfo, 500);
+        });
+
+        // 監聽CSS載入完成事件
+        window.addEventListener('cssLoaded', function(event) {
+            console.log('CSS載入完成事件:', event.detail);
+            updateInfo();
+        });
+    </script>
+</body>
+</html>

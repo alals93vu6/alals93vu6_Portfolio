@@ -1,5 +1,5 @@
 /* ========================================================================
-   手機版關於我頁面樣式 - Mobile About Me Page (Vertical Layout)
+   手機版關於我頁面樣式 - Mobile About Me Page (New Layout)
    ======================================================================== 
    
    用途: 手機版關於我頁面的垂直佈局樣式，包含:
@@ -60,92 +60,23 @@ body {
   border-radius: 6px;
 }
 
-/* 漢堡選單按鈕 */
-.hamburger-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 28px;
-  height: 22px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  touch-action: manipulation;
-}
-
-.hamburger-menu span {
-  display: block;
-  height: 2px;
-  width: 100%;
-  background-color: white;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-  transform-origin: center;
-}
-
-/* 漢堡選單開啟動畫 */
-.hamburger-menu.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger-menu.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger-menu.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
-}
-
-/* 導航選單 - 手機版全屏覆蓋 */
+/* 導航連結 - 簡化手機版 */
 .nav-links {
-  position: fixed;
-  top: 50px;  /* 配合縮小後的導航欄 */
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 50px);
-  
-  background-color: rgba(49, 49, 49, 0.98);
-  backdrop-filter: blur(15px);
-  
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 2rem;
-  gap: 1.5rem;
-  
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  overflow-y: auto;
-  z-index: 999;
-}
-
-.nav-links.active {
-  transform: translateX(0);
+  gap: 1rem;
 }
 
 .nav-links a {
   color: white;
   text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  width: 80%;
-  text-align: center;
-  
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-  touch-action: manipulation;
+  font-size: 0.9rem;  /* 縮小字體 */
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
-.nav-links a:hover,
-.nav-links a:active {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+.nav-links a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* ====== 主要內容區域 ====== */
@@ -244,25 +175,10 @@ body {
   min-height: 0;  /* 允許收縮 */
 }
 
-/* 平板專用：讓影片區域佔更大比例 */
-@media (min-width: 480px) and (max-width: 768px) {
-  .info-panel {
-    gap: 0.8rem;  /* 進一步縮小間距 */
-    padding: 0.8rem;  /* 縮小內距給影片讓路 */
-  }
-  
-  /* 整體容器也縮小內距 */
-  .gallery-container {
-    padding: 0.5rem;  /* 縮小容器內距 */
-  }
-}
-
 /* ====== 影片區域 ====== */
 .info-screenshot {
   width: 100%;
-  /* 大膽給予更多高度空間 */
-  height: clamp(220px, 60vw, 400px);  /* 基礎就給更多空間 */
-  
+  height: clamp(150px, 35vw, 200px);  /* 響應式高度，較緊湊 */
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 6px;
   display: flex;
@@ -276,56 +192,8 @@ body {
 .info-screenshot img {
   width: 100%;
   height: 100%;
-  object-fit: contain;  /* 保持完整比例，不裁切 */
+  object-fit: cover;
   border-radius: 6px;
-}
-
-/* 平板優化：480-768px範圍給予大膽的垂直空間 */
-@media (min-width: 480px) and (max-width: 768px) {
-  .info-screenshot {
-    height: clamp(320px, 55vw, 450px);  /* 平板大膽給予更多高度 */
-  }
-  
-  /* 平板模式下縮小其他元素，讓影片成為主角 */
-  .section-title {
-    font-size: clamp(1.2rem, 4vw, 1.6rem);
-    margin: 0.3rem 0 0.8rem 0;  /* 縮小標題間距 */
-  }
-  
-  .carousel {
-    margin-bottom: 0.8rem;  /* 縮小輪播間距 */
-  }
-  
-  /* 縮小輪播按鈕 */
-  .arrow {
-    width: 30px;
-    height: 30px;
-    padding: 0.4rem;
-    margin: 0 0.3rem;
-    font-size: 0.9rem;
-  }
-  
-  /* 縮小縮圖按鈕 */
-  .thumb {
-    width: clamp(3.5rem, 15vw, 5rem);
-    height: clamp(2.2rem, 9vw, 3.2rem);
-    font-size: clamp(0.5rem, 2.5vw, 0.8rem);
-  }
-  
-  .thumbnails {
-    gap: 0.6rem;  /* 縮小縮圖間距 */
-    margin: 0 0.3rem;
-  }
-  
-  .info-text {
-    gap: 0.6rem;  /* 縮小文字區間距 */
-  }
-  
-  .info-desc,
-  .info-dev {
-    min-height: 50px;  /* 縮小文字區最小高度 */
-    padding: 0.6rem;   /* 縮小內距 */
-  }
 }
 
 /* ====== 文字資訊區域 ====== */
@@ -362,12 +230,6 @@ body {
   overflow-y: auto;
   word-wrap: break-word;
   hyphens: auto;
-  
-  /* 文字對齊修正 */
-  text-align: left;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
 }
 
 .info-desc {
@@ -429,7 +291,7 @@ body {
 }
 
 /* ====== 小尺寸手機優化 ====== */
-@media (max-width: 479px) {
+@media (max-width: 375px) {
   .gallery-container {
     padding: 0.5rem;
   }
@@ -444,7 +306,7 @@ body {
   }
   
   .info-screenshot {
-    height: clamp(160px, 55vw, 220px);  /* 手機版可以接受稍微裁切 */
+    height: clamp(120px, 30vw, 150px);
   }
   
   .info-desc,
@@ -454,21 +316,14 @@ body {
   }
 }
 
-/* 極小手機特別處理 */
-@media (max-width: 360px) {
-  .info-screenshot {
-    height: clamp(140px, 60vw, 180px);  /* 極小手機進一步調整 */
-  }
-}
-
-/* ====== 極小螢幕高度優化 ====== */
+/* ====== 極小螢幕優化 ====== */
 @media (max-height: 600px) {
   .section-title {
     margin: 0.2rem 0 0.5rem 0;
   }
   
   .info-screenshot {
-    height: clamp(120px, 35vw, 180px);  /* 低高度螢幕壓縮影片區域 */
+    height: clamp(100px, 25vw, 120px);
   }
   
   .info-desc,
@@ -490,7 +345,7 @@ body {
   }
   
   .info-screenshot {
-    height: clamp(100px, 30vw, 160px);  /* 橫屏模式適當壓縮 */
+    height: clamp(80px, 20vh, 100px);
   }
   
   .carousel {

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斷點測試 - 768px平板測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #ffd369;
+        }
+
+        .device-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .device-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .current-width {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffd369;
+            margin: 1rem 0;
+        }
+
+        .breakpoint-status {
+            font-size: 1.2rem;
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .mobile { background-color: rgba(0, 150, 0, 0.3); }
+        .desktop { background-color: rgba(150, 0, 0, 0.3); }
+
+        .test-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .test-link {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .test-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .test-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            
+            .device-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>📱 響應式斷點測試</h1>
+        
+        <div class="info-box">
+            <h2>🎯 測試目的</h2>
+            <p>驗證 768px 的平板設備是否正確使用手機版樣式。</p>
+            <p><strong>預期行為</strong>：768px 及以下 → 手機版，769px 以上 → 桌面版</p>
+        </div>
+
+        <div class="current-width">
+            當前視窗寬度: <span id="current-width">-</span>px
+        </div>
+
+        <div class="breakpoint-status" id="breakpoint-status">
+            檢測中...
+        </div>
+
+        <div class="device-info">
+            <div class="device-card">
+                <h3>📱 手機版範圍</h3>
+                <p><strong>≤ 768px</strong></p>
+                <p>iPhone, Android Phone, 直向平板</p>
+            </div>
+            
+            <div class="device-card">
+                <h3>💻 桌面版範圍</h3>
+                <p><strong>≥ 769px</strong></p>
+                <p>橫向平板, 筆電, 桌機</p>
+            </div>
+        </div>
+
+        <div class="test-links">
+            <a href="index.html" class="test-link">🏠 測試首頁</a>
+            <a href="Portfolio_aubotMe.html" class="test-link">👤 測試關於我</a>
+            <a href="Portfolio_unity.html" class="test-link">🎮 測試Unity</a>
+            <a href="Portfolio_HTML.html" class="test-link">🌐 測試HTML</a>
+        </div>
+
+        <div class="info-box">
+            <h3>🧪 測試方法</h3>
+            <ul>
+                <li>調整瀏覽器視窗寬度至 768px</li>
+                <li>觀察狀態是否顯示「手機版」</li>
+                <li>點擊測試連結，檢查是否載入手機版CSS</li>
+                <li>測試 769px 是否切換至桌面版</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function updateInfo() {
+            const width = window.innerWidth;
+            const widthSpan = document.getElementById('current-width');
+            const statusDiv = document.getElementById('breakpoint-status');
+            
+            widthSpan.textContent = width;
+            
+            // 與載入器邏輯一致：768px及以下為手機版
+            const isMobile = width <= 768;
+            
+            if (isMobile) {
+                statusDiv.textContent = `📱 手機版 (${width}px ≤ 768px)`;
+                statusDiv.className = 'breakpoint-status mobile';
+            } else {
+                statusDiv.textContent = `💻 桌面版 (${width}px > 768px)`;
+                statusDiv.className = 'breakpoint-status desktop';
+            }
+        }
+
+        // 初始更新
+        updateInfo();
+        
+        // 監聽視窗大小變化
+        window.addEventListener('resize', updateInfo);
+        
+        // 每秒更新一次，確保即時性
+        setInterval(updateInfo, 100);
+    </script>
+</body>
+</html>

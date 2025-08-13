@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS載入診斷</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: #1a1a1a;
+            color: white;
+        }
+        .test-result {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ccc;
+        }
+        .success { border-color: #4CAF50; background: rgba(76, 175, 80, 0.1); }
+        .error { border-color: #f44336; background: rgba(244, 67, 54, 0.1); }
+        .warning { border-color: #ff9800; background: rgba(255, 152, 0, 0.1); }
+        #console-output {
+            background: #000;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        button:hover {
+            background: #1976D2;
+        }
+        .resize-controls {
+            margin: 1rem 0;
+        }
+        #width-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSS動態載入系統診斷</h1>
+    
+    <div class="resize-controls">
+        <div id="width-display">當前寬度: <span id="current-width"></span>px</div>
+        <button onclick="simulateDesktop()">模擬桌面 (1920px)</button>
+        <button onclick="simulateTablet()">模擬平板 (768px)</button>
+        <button onclick="simulateMobile()">模擬手機 (375px)</button>
+        <button onclick="runFullDiagnostic()">完整診斷</button>
+        <button onclick="clearConsole()">清除記錄</button>
+    </div>
+
+    <div id="test-results"></div>
+    
+    <h3>控制台輸出:</h3>
+    <div id="console-output"></div>
+
+    <!-- 載入CSS系統 -->
+    <link rel="stylesheet" href="CSS/responsive-loader.css">
+    <script src="JavaScript/responsive-css-loader.js"></script>
+
+    <script>
+        // 捕獲所有控制台輸出
+        const consoleOutput = document.getElementById('console-output');
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        function logToPage(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌' : type === 'warn' ? '⚠️' : 'ℹ️';
+            consoleOutput.textContent += `[${timestamp}] ${prefix} ${message}\n`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            logToPage(args.join(' '), 'log');
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            logToPage(args.join(' '), 'error');
+        };
+
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            logToPage(args.join(' '), 'warn');
+        };
+
+        // 捕獲未處理的錯誤
+        window.addEventListener('error', function(event) {
+            logToPage(`未處理錯誤: ${event.error}`, 'error');
+        });
+
+        // 更新寬度顯示
+        function updateWidthDisplay() {
+            document.getElementById('current-width').textContent = window.innerWidth;
+        }
+
+        // 模擬不同螢幕大小
+        function simulateDesktop() {
+            // 無法真正改變視窗大小，但可以測試檢測邏輯
+            console.log('模擬桌面環境 (≥768px)');
+            if (window.ResponsiveCSSLoader) {
+                console.log('強制重新載入CSS...');
+                window.ResponsiveCSSLoader.forceReload();
+            }
+        }
+
+        function simulateTablet() {
+            console.log('模擬平板環境 (768px)');
+            if (window.ResponsiveCSSLoader) {
+                window.ResponsiveCSSLoader.forceReload();
+            }
+        }
+
+        function simulateMobile() {
+            console.log('模擬手機環境 (<768px)');
+            if (window.ResponsiveCSSLoader) {
+                window.ResponsiveCSSLoader.forceReload();
+            }
+        }
+
+        // 完整診斷
+        async function runFullDiagnostic() {
+            console.log('開始完整診斷...');
+            
+            const resultsContainer = document.getElementById('test-results');
+            resultsContainer.innerHTML = '';
+
+            // 測試1: 檢查ResponsiveCSSLoader是否存在
+            addTestResult(
+                '響應式CSS載入器可用性',
+                !!window.ResponsiveCSSLoader,
+                window.ResponsiveCSSLoader ? '✅ ResponsiveCSSLoader已載入' : '❌ ResponsiveCSSLoader未找到'
+            );
+
+            // 測試2: 檢查當前設備類型檢測
+            if (window.ResponsiveCSSLoader) {
+                const deviceType = window.ResponsiveCSSLoader.getCurrentDeviceType();
+                addTestResult(
+                    '設備類型檢測',
+                    !!deviceType,
+                    deviceType ? `✅ 檢測到: ${deviceType}` : '❌ 無法檢測設備類型'
+                );
+            }
+
+            // 測試3: 檢查CSS文件是否存在
+            const cssFiles = [
+                'CSS/responsive-loader.css',
+                'CSS/desktop/index/base.css',
+                'CSS/desktop/index/hero.css',
+                'CSS/mobile/index/base.css',
+                'CSS/mobile/index/hero.css'
+            ];
+
+            for (const file of cssFiles) {
+                try {
+                    const response = await fetch(file, { method: 'HEAD' });
+                    const exists = response.status === 200;
+                    addTestResult(
+                        `CSS文件: ${file}`,
+                        exists,
+                        exists ? '✅ 文件存在' : `❌ 無法存取 (${response.status})`
+                    );
+                } catch (error) {
+                    addTestResult(
+                        `CSS文件: ${file}`,
+                        false,
+                        `❌ 載入錯誤: ${error.message}`
+                    );
+                }
+            }
+
+            // 測試4: 檢查已載入的樣式表
+            const loadedStylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+            addTestResult(
+                '已載入樣式表數量',
+                loadedStylesheets.length > 0,
+                `${loadedStylesheets.length} 個樣式表已載入`
+            );
+
+            // 測試5: 測試強制重新載入
+            if (window.ResponsiveCSSLoader) {
+                try {
+                    console.log('測試強制重新載入...');
+                    window.ResponsiveCSSLoader.forceReload();
+                    addTestResult(
+                        '強制重新載入測試',
+                        true,
+                        '✅ 重新載入功能正常'
+                    );
+                } catch (error) {
+                    addTestResult(
+                        '強制重新載入測試',
+                        false,
+                        `❌ 重新載入失敗: ${error.message}`
+                    );
+                }
+            }
+
+            console.log('診斷完成！');
+        }
+
+        function addTestResult(testName, success, message) {
+            const resultsContainer = document.getElementById('test-results');
+            const div = document.createElement('div');
+            div.className = `test-result ${success ? 'success' : 'error'}`;
+            div.innerHTML = `<strong>${testName}:</strong> ${message}`;
+            resultsContainer.appendChild(div);
+        }
+
+        function clearConsole() {
+            consoleOutput.textContent = '';
+        }
+
+        // 監聽視窗大小變化
+        window.addEventListener('resize', updateWidthDisplay);
+        window.addEventListener('load', updateWidthDisplay);
+
+        // 初始更新
+        setTimeout(() => {
+            updateWidthDisplay();
+            console.log('診斷頁面已載入');
+        }, 100);
+
+        // 監聽CSS載入完成事件
+        window.addEventListener('cssLoaded', function(event) {
+            console.log('收到CSS載入完成事件:', event.detail);
+        });
+    </script>
+</body>
+</html>

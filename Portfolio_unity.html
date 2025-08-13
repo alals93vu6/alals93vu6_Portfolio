@@ -5,8 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UNITY作品集導覽</title>
-    <link rel="stylesheet" href="CSS/introduce.css">
+    <!-- CSS由響應式載入器動態載入 -->
     <link rel="icon" href="Assets/image/index/logotest.png" type="image/png">
+    <script src="JavaScript/portfolio-css-loader.js"></script>
 </head>
 
 <body>
@@ -15,6 +16,15 @@
             <img src="Assets/image/index/logotest.png" alt="Logo" class="logo-img">
             <span>作品集</span>
         </div>
+        
+        <!-- 漢堡選單按鈕（手機版顯示） -->
+        <button class="hamburger-menu" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <!-- 導航選單 -->
         <nav class="nav-links">
             <a href="index.html?scrollTo=totalWorks">首頁</a>
             <a href="Portfolio_aubotMe.html">關於我</a>
@@ -59,8 +69,8 @@
                 title: 'One Game Peer Week',
                 screenshot: 'Assets/image/unityInfo/ListG_webM.webm',
                 thumbnail: 'Assets/image/unityInfo/ListG_logo.jpg',
-                intro: '課堂教授 Ramiro Corbetta 是一名獨立遊戲開發者，同時也是一名大學教授，於紐約長島大學中設立了設計系並且任職於系主任。曾以《Sportsfriends》參加IndieCade 比賽並且獲獎，同時也是IGF 獲獎遊戲《Glow Artisan》的共同創作者。<br><br>同時也是傅爾布萊特計畫(the Fulbright Program) 中的一員，是由美國國務院與外國政府共同推動之學術與文化交流計畫，目的在透過人員、知識和技術的交流，促進美國和世界各地人民的相互了解。 半世紀以來，學術交流基金會㇐共獎助大約1,600 位美國人士到台灣講學、研究或進修，同時也獎助1,600 位左右台灣的學者、學生、研究及專業人士到美國攻讀學位，研究或實習。<br><br>後來於2021 年時來到南台科大授課了一學期，課名為"One Game Peer Week" 的教程，學生每個禮拜都要依照主題並在一周的時間內自己設計並且做出一款遊戲，為期十五周中也就這麼製作了十五款遊戲。',
-                dev: ''
+                intro: '課堂教授 Ramiro Corbetta 是一名獨立遊戲開發者，同時也是一名大學教授，於紐約長島大學中設立了設計系並且任職於系主任。曾以《Sportsfriends》參加IndieCade 比賽並且獲獎，同時也是IGF 獲獎遊戲《Glow Artisan》的共同創作者。<br><br>同時也是傅爾布萊特計畫(the Fulbright Program) 中的一員，是由美國國務院與外國政府共同推動之學術與文化交流計畫，目的在透過人員、知識和技術的交流，促進美國和世界各地人民的相互了解。 半世紀以來，學術交流基金會㇐共獎助大約1,600 位美國人士到台灣講學、研究或進修，同時也獎助1,600 位左右台灣的學者、學生、研究及專業人士到美國攻讀學位，研究或實習。',
+                dev: '2021 年時來到南台科大授課了一學期，課名為"One Game Peer Week" 的教程，學生每個禮拜都要依照主題並在一周的時間內自己設計並且做出一款遊戲，為期十五周中也就這麼製作了十五款遊戲。'
             },
             {
                 title: '羅馬生鼠鬥',
@@ -172,6 +182,30 @@
         <video src="Assets/image/unityInfo/ListF_webM.webm" preload="auto"></video>
         <video src="Assets/image/unityInfo/ListG_webM.webm" preload="auto"></video>
     </div>
+    <!-- 漢堡選單控制腳本 -->
+    <script>
+        function toggleMobileMenu() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        }
+        
+        // 點擊選單項目後關閉選單
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const hamburger = document.querySelector('.hamburger-menu');
+                    const nav = document.querySelector('.nav-links');
+                    hamburger.classList.remove('active');
+                    nav.classList.remove('active');
+                });
+            });
+        });
+    </script>
+    <!-- 響應式CSS載入器已移至head中 -->
 </body>
 
 </html>

@@ -2,10 +2,13 @@
 <html lang="zh-tw">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>關於我</title>
-    <link rel="stylesheet" href="CSS/introduce.css">
+    <!-- CSS由響應式載入器動態載入 -->
     <link rel="icon" href="Assets/image/index/logotest.png" type="image/png">
+    
+    <!-- 響應式CSS載入器 - 放在head中確保CSS在頁面內容之前載入 -->
+    <script src="JavaScript/portfolio-css-loader.js"></script>
 </head>
 <body>
     <header class="navbar">
@@ -13,6 +16,15 @@
             <img src="Assets/image/index/logotest.png" alt="Logo" class="logo-img">
             <span>作品集</span>
         </div>
+        
+        <!-- 漢堡選單按鈕（手機版顯示） -->
+        <button class="hamburger-menu" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <!-- 導航選單 -->
         <nav class="nav-links">
             <a href="index.html?scrollTo=totalWorks">首頁</a>
             <a href="Portfolio_unity.html">遊戲開發</a>
@@ -151,6 +163,33 @@
         renderThumbs();
         select(0, true);
     </script>
+
+    <!-- 漢堡選單控制腳本 -->
+    <script>
+        function toggleMobileMenu() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        }
+        
+        // 點擊選單項目後關閉選單
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const hamburger = document.querySelector('.hamburger-menu');
+                    const nav = document.querySelector('.nav-links');
+                    hamburger.classList.remove('active');
+                    nav.classList.remove('active');
+                });
+            });
+        });
+    </script>
+    
+    <!-- 響應式CSS載入器已移至head中 -->
+    
     <div style="display: none;">
         <video src="Assets/image/userInfo/ListA_webM.webm" preload="auto"></video>
         <video src="Assets/image/userInfo/ListB_webM.webm" preload="auto"></video>

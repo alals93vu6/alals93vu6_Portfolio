@@ -17,45 +17,62 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  
+  /* 統一高度和內距設置 - 與首頁一致 */
+  padding: 0.75rem 2rem;
+  min-height: 60px;
+  max-height: 60px;
+  box-sizing: border-box;
+  
   position: sticky;
   top: 0;
   z-index: 1000;
+  
+  /* Chrome兼容性修復 - 與首頁一致 */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  contain: layout;
+  isolation: isolate;
 }
 
-/* Logo 或標題 */
+/* Logo 或標題 - 與首頁統一 */
 .navbar .logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: clamp(0.5rem, 1.5vw, 1rem); /* 響應式Logo圖片和文字間距 */
   font-weight: bold;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem); /* 響應式Logo字體大小 */
 }
 
-/* 圖片樣式（固定為正方形） */
+/* 圖片樣式 - 與首頁統一 */
 .logo-img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 8px;
-  /* 可選，讓圖片微微圓角 */
+  width: clamp(40px, 8vw, 60px);  /* 響應式寬度 */
+  height: clamp(40px, 8vw, 60px); /* 響應式高度，保持正方形 */
+  object-fit: cover;              /* 保持比例填充 */
+  border-radius: clamp(6px, 1.5vw, 10px); /* 響應式圓角 */
 }
 
-/* 導覽連結區 */
+/* 導覽連結區 - 與首頁統一 */
 .navbar .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: clamp(1rem, 4vw, 2.5rem); /* 響應式連結間距 */
 }
 
 .navbar .nav-links a {
   color: white;
   text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s;
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem); /* 響應式連結字體 */
+  transition: color 0.3s; /* 顏色變化的平滑過渡 */
+  
+  /* 響應式內距增加觸控友好性 */
+  padding: clamp(0.3rem, 1vw, 0.5rem) clamp(0.5rem, 1.5vw, 0.8rem);
+  border-radius: 4px;
 }
 
 .navbar .nav-links a:hover {
-  color: #ffd369;
+  color: #ffd369; /* 懸停時變為金黃色 */
 }
 
 .section-title {
@@ -201,6 +218,11 @@ body {
   to {
     opacity: 1;
   }
+}
+
+/* 桌面版隱藏漢堡選單 */
+.hamburger-menu {
+  display: none;
 }
 
 /* RWD 手機版：縱向排列 */

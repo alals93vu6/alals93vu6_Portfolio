@@ -18,7 +18,7 @@
     
     // ====== 配置選項 ======
     const CONFIG = {
-        // 斷點設置 (像素)
+        // 斷點設置 (像素) - 768px及以下為手機版
         MOBILE_BREAKPOINT: 768,
         
         // CSS文件路徑配置 (首頁專用)
@@ -59,7 +59,8 @@
      * @returns {string} 'desktop' 或 'mobile'
      */
     function detectDeviceType() {
-        return window.innerWidth >= CONFIG.MOBILE_BREAKPOINT ? 'desktop' : 'mobile';
+        // 768px及以下為手機版，769px以上為桌面版
+        return window.innerWidth <= CONFIG.MOBILE_BREAKPOINT ? 'mobile' : 'desktop';
     }
     
     /**
