@@ -1,0 +1,297 @@
+/* ========================================================================
+   手機版作品展示區樣式 - Mobile Total Works Section Styles
+   ======================================================================== 
+   
+   用途: 手機版作品展示區塊的樣式，包含:
+   - 垂直排列的作品卡片佈局
+   - 觸控友好的互動效果
+   - 響應式文字和圖片適配
+   - 手機版背景和動畫優化
+   
+   特色: 從桌面版的水平排列改為垂直卡片式佈局
+   ======================================================================== */
+
+/* ====== 作品展示主容器 ====== */
+#totalWorks {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;        /* 最小高度為一個完整螢幕 */
+  padding: 0 1rem;          /* 左右邊距，無上下padding */
+  background-color: rgb(17, 17, 17); /* 深灰色背景 */
+
+  /* Flexbox 佈局 - 垂直排列 */
+  display: flex;
+  flex-direction: column;   /* 垂直排列: 標題 -> 作品容器 */
+  justify-content: center;  /* 垂直居中對齊 */
+  align-items: center;      /* 水平居中對齊 */
+  gap: 2rem;               /* 子元素間距 */
+}
+
+/* ====== 作品容器 - 手機版垂直佈局 ====== */
+/*
+   手機版採用垂直卡片佈局:
+   - 每個作品項目獨佔一行
+   - 卡片式設計增強視覺層次
+   - 觸控友好的互動體驗
+*/
+.works-container {
+  display: flex;            /* Flexbox佈局 */
+  flex-direction: column;   /* 垂直排列作品項目 */
+  width: 100%;
+  
+  /* 響應式寬度限制 */
+  max-width: min(500px, 95vw); /* 手機版適中寬度 */
+  
+  /* 響應式間距 */
+  gap: 1.5rem;             /* 作品卡片間距 */
+  
+  /* 內容居中 */
+  margin: 0 auto;          /* 水平居中 */
+  padding: 0;              /* 無額外內距 */
+}
+
+/* 滾動錨點偏移 - 避免被固定導航欄遮住 */
+.scroll-anchor {
+  scroll-margin-top: 80px;  /* 根據手機版導航欄高度調整 */
+}
+
+/* ====== 單個作品項目 - 手機版卡片設計 ====== */
+.work-block {
+  position: relative;
+  display: block;           /* 作為連結使用 */
+  
+  /* 尺寸設置 */
+  width: 100%;             /* 充滿容器寬度 */
+  height: 200px;           /* 固定高度確保一致性 */
+  
+  /* 視覺效果 */
+  overflow: hidden;         /* 隱藏溢出內容 */
+  border-radius: 12px;     /* 圓角卡片效果 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* 卡片陰影 */
+  
+  /* 連結樣式 */
+  text-decoration: none;    /* 移除連結下劃線 */
+  color: inherit;
+  cursor: pointer;
+  
+  /* 動畫效果 */
+  transition: all 0.3s ease; /* 所有變化的平滑過渡 */
+  transform: translateY(0); /* 初始位置 */
+  
+  /* 觸控優化 */
+  touch-action: manipulation; /* 禁用雙擊縮放 */
+}
+
+/* ====== 手機版觸控互動效果 ====== */
+/* 手機版不使用懸停效果，改用觸控回饋 */
+
+/* 作品項目觸控效果 */
+.work-block:active {
+  transform: translateY(2px) scale(0.98); /* 輕微下移和縮小 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* 減少陰影 */
+}
+
+/* 作品項目觸控後回彈效果 */
+.work-block:hover {
+  transform: translateY(-4px) scale(1.02); /* 輕微上移和放大 */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* 增強陰影 */
+}
+
+/* ====== 背景圖片層 ====== */
+/* 共用的背景圖片基礎樣式 */
+.bg-cover, .bg-hover {
+  position: absolute;
+  inset: 0;                /* 等同於 top:0, right:0, bottom:0, left:0 */
+  background-size: cover;   /* 圖片覆蓋整個區域 */
+  background-position: center; /* 圖片居中 */
+  background-repeat: no-repeat;
+  transition: opacity 0.3s ease; /* 透明度變化動畫 */
+}
+
+/* 背景圖片層 - 始終顯示 */
+.bg-cover {
+  z-index: 1;              /* 在最底層 */
+  opacity: 1;              /* 始終顯示 */
+}
+
+/* 懸停時顯示的圖片/影片層 - 手機版簡化 */
+.bg-hover {
+  /* 影片元素專用樣式 */
+  object-fit: cover;        /* 影片填充方式 */
+  width: 100%;
+  height: 100%;
+  opacity: 0;              /* 手機版默認隱藏 */
+  z-index: 2;              /* 在背景層之上 */
+  pointer-events: none;     /* 不攔截觸控事件 */
+}
+
+/* 手機版觸控時顯示hover層 (可選功能) */
+.work-block:active .bg-hover {
+  opacity: 0.7;            /* 觸控時部分顯示 */
+}
+
+/* ====== 文字標籤覆蓋層 ====== */
+.label {
+  position: absolute;
+  bottom: 0;               /* 固定在底部 */
+  left: 0;
+  right: 0;
+  z-index: 10;             /* 在背景圖片之上 */
+  color: white;
+  
+  /* 手機版字體大小 */
+  font-size: clamp(1.2rem, 5vw, 1.8rem); /* 響應式標籤字體 */
+  font-weight: bold;
+  text-align: center;
+  
+  /* 佈局設置 */
+  height: auto;            /* 自動高度 */
+  
+  /* 使用Flexbox居中對齊文字 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* 漸變背景增加文字可讀性 */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,    /* 底部較深 */
+    rgba(0, 0, 0, 0.4) 70%,   /* 中間適中 */
+    rgba(0, 0, 0, 0.1) 100%   /* 頂部較淡 */
+  );
+  
+  /* 響應式內距 */
+  padding: 1.5rem 1rem;     /* 上下較大內距 */
+  
+  /* 文字效果 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* 陰影增加可讀性 */
+  letter-spacing: 1px;      /* 字母間距 */
+}
+
+/* ====== 區塊標題 ====== */
+.works-title {
+  color: white;
+  text-align: center;
+  
+  /* 手機版標題字體 */
+  font-size: clamp(2rem, 8vw, 3.5rem); /* 響應式標題字體 */
+  font-weight: bold;
+  
+  /* 響應式間距 */
+  margin: 0 auto clamp(1.5rem, 5vw, 2.5rem) auto; /* 響應式下邊距 */
+  
+  font-family: 'Noto Sans TC', sans-serif; /* 中文字體 */
+  width: 100%;
+  
+  /* 文字效果 */
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.8); /* 陰影增加可讀性 */
+  letter-spacing: clamp(1px, 1vw, 2px); /* 響應式字母間距 */
+  
+  /* 響應式行高 */
+  line-height: 1.2;         /* 緊湊行高適合大標題 */
+}
+
+/* ====== 專屬背景圖片設定 ====== */
+/* Spine 2D 作品封面 */
+.spine-cover {
+  background-image: url("../../../Assets/image/index/SpinePage.png");
+}
+
+/* 網頁作品封面 */
+.web-cover {
+  background-image: url("../../../Assets/image/index/webPage.png");
+}
+
+/* Unity 遊戲作品封面 */
+.unity-cover {
+  background-image: url("../../../Assets/image/index/UnityPage.png");
+}
+
+/* ====== 手機版特殊適配 ====== */
+
+/* 小尺寸手機適配 (寬度 < 375px) */
+@media (max-width: 374px) {
+  .works-container {
+    max-width: 98vw;        /* 更大寬度利用率 */
+    gap: 1rem;              /* 減少間距 */
+  }
+  
+  .work-block {
+    height: 160px;          /* 較小高度 */
+    border-radius: 8px;     /* 較小圓角 */
+  }
+  
+  .label {
+    font-size: clamp(1rem, 6vw, 1.4rem); /* 更小字體 */
+    padding: 1rem 0.5rem;   /* 減少內距 */
+  }
+  
+  .works-title {
+    font-size: clamp(1.8rem, 9vw, 2.8rem); /* 更小標題 */
+    margin-bottom: 1rem;    /* 減少間距 */
+  }
+}
+
+/* 大尺寸手機適配 (寬度 >= 480px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .works-container {
+    max-width: 450px;       /* 稍大的寬度限制 */
+  }
+  
+  .work-block {
+    height: 220px;          /* 稍大高度 */
+  }
+  
+  .label {
+    font-size: clamp(1.3rem, 4vw, 2rem); /* 稍大字體 */
+    padding: 2rem 1rem;     /* 增加內距 */
+  }
+}
+
+/* 橫屏模式適配 */
+@media (orientation: landscape) and (max-height: 500px) {
+  #totalWorks {
+    min-height: auto;       /* 移除最小高度限制 */
+    padding: 1rem;          /* 增加上下內距 */
+  }
+  
+  .works-container {
+    gap: 1rem;              /* 減少間距 */
+  }
+  
+  .work-block {
+    height: 140px;          /* 降低高度適應橫屏 */
+  }
+  
+  .label {
+    padding: 1rem 0.5rem;   /* 減少內距 */
+    font-size: clamp(1rem, 4vw, 1.4rem); /* 調整字體 */
+  }
+  
+  .works-title {
+    font-size: clamp(1.5rem, 6vw, 2.5rem); /* 橫屏標題調整 */
+    margin-bottom: 1rem;
+  }
+}
+
+/* ====== 觸控回饋動畫增強 ====== */
+/* 為手機版添加更明顯的觸控回饋 */
+@keyframes touchFeedback {
+  0% { 
+    transform: scale(1); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% { 
+    transform: scale(0.95); 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+  100% { 
+    transform: scale(1.02); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* 觸控時應用動畫 */
+.work-block:active {
+  animation: touchFeedback 0.2s ease-out;
+}

@@ -170,17 +170,17 @@
 /* ====== 專屬背景圖片設定 ====== */
 /* Spine 2D 作品封面 */
 .spine-cover {
-  background-image: url("../../Assets/image/index/SpinePage.png");
+  background-image: url("../../../Assets/image/index/SpinePage.png");
 }
 
 /* 網頁作品封面 */
 .web-cover {
-  background-image: url("../../Assets/image/index/webPage.png");
+  background-image: url("../../../Assets/image/index/webPage.png");
 }
 
 /* Unity 遊戲作品封面 */
 .unity-cover {
-  background-image: url("../../Assets/image/index/UnityPage.png");
+  background-image: url("../../../Assets/image/index/UnityPage.png");
 }
 
 /* 
@@ -199,3 +199,4 @@
   background-image: url("../../Assets/image/index/UnityPage_GIF3.gif");
 }
 */
+

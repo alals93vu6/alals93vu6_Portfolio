@@ -21,7 +21,7 @@
         // 斷點設置 (像素)
         MOBILE_BREAKPOINT: 768,
         
-        // CSS文件路徑配置
+        // CSS文件路徑配置 (首頁專用)
         CSS_PATHS: {
             desktop: {
                 base: 'CSS/desktop/index/base.css',
@@ -43,7 +43,7 @@
         RESIZE_DEBOUNCE_DELAY: 300,
         
         // 載入超時時間 (毫秒) 
-        LOAD_TIMEOUT: 5000
+        LOAD_TIMEOUT: 3000
     };
     
     // ====== 全域變數 ======
@@ -63,6 +63,28 @@
     }
     
     /**
+     * 預載入關鍵圖片
+     * @param {string} deviceType - 設備類型
+     */
+    function preloadCriticalImages(deviceType) {
+        const images = [
+            'Assets/image/index/HeroPage_BackGroundA.png',
+            'Assets/image/index/SpinePage.png',
+            'Assets/image/index/webPage.png',
+            'Assets/image/index/UnityPage.png'
+        ];
+        
+        images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+            // 預載入但不阻塞主要流程
+        });
+        
+        console.log(`🖼️ 開始預載入 ${images.length} 張關鍵圖片`);
+    }
+    
+    
+    /**
      * 顯示載入指示器
      */
     function showLoadingIndicator() {
@@ -75,7 +97,10 @@
         // 創建載入指示器
         const loader = document.createElement('div');
         loader.className = 'css-loading';
-        loader.innerHTML = '載入樣式中...';
+        loader.innerHTML = `
+            <div style="margin-bottom: 1rem;">🎨 載入樣式中...</div>
+            <div style="font-size: 0.9rem; opacity: 0.8;">正在為您的設備優化體驗</div>
+        `;
         document.body.appendChild(loader);
         
         // 隱藏主要內容
@@ -100,12 +125,23 @@
      * 移除已載入的CSS文件
      */
     function removeLoadedStylesheets() {
+        // 移除動態載入的CSS
         loadedStylesheets.forEach(link => {
             if (link && link.parentNode) {
                 link.parentNode.removeChild(link);
             }
         });
         loadedStylesheets = [];
+        
+        // 同時移除fallback CSS
+        const fallbackBase = document.getElementById('fallback-base');
+        const fallbackHero = document.getElementById('fallback-hero');
+        if (fallbackBase && fallbackBase.parentNode) {
+            fallbackBase.parentNode.removeChild(fallbackBase);
+        }
+        if (fallbackHero && fallbackHero.parentNode) {
+            fallbackHero.parentNode.removeChild(fallbackHero);
+        }
     }
     
     /**
@@ -170,20 +206,41 @@
         }
         
         isLoading = true;
-        showLoadingIndicator();
+        // showLoadingIndicator(); // 暫時移除載入指示器避免黑屏
         
         try {
             console.log(`🔄 開始載入 ${deviceType} CSS...`);
             
-            // 移除舊的CSS文件
-            removeLoadedStylesheets();
+            // 只有在切換到不同設備類型時才移除舊CSS
+            if (currentDeviceType && currentDeviceType !== deviceType) {
+                removeLoadedStylesheets();
+            } else if (!currentDeviceType) {
+                // 首次載入，根據設備類型決定是否移除fallback
+                if (deviceType === 'mobile') {
+                    removeLoadedStylesheets(); // 手機版需要移除桌面fallback
+                } else {
+                    // 桌面版使用現有的fallback，只需要載入剩餘的CSS
+                    console.log('🔄 桌面版使用現有fallback CSS');
+                }
+            }
             
             // 獲取對應設備的CSS路徑
             const cssPaths = CONFIG.CSS_PATHS[deviceType];
             
-            // 並行載入所有CSS文件
+            if (!cssPaths) {
+                throw new Error(`未找到 ${deviceType} 的CSS配置`);
+            }
+            
+            // 並行載入CSS文件
             const loadPromises = Object.entries(cssPaths).map(([name, path]) => {
                 const id = `css-${deviceType}-${name}`;
+                
+                // 如果是桌面版首次載入，跳過已經載入的fallback CSS
+                if (!currentDeviceType && deviceType === 'desktop' && (name === 'base' || name === 'hero')) {
+                    console.log(`⏩ 跳過 ${name}，使用現有fallback`);
+                    return Promise.resolve(); // 跳過已存在的CSS
+                }
+                
                 return loadStylesheet(path, id);
             });
             
@@ -195,6 +252,9 @@
             
             console.log(`✅ ${deviceType} CSS載入完成`);
             
+            // 延遲預載入圖片，避免阻塞初始載入
+            setTimeout(() => preloadCriticalImages(deviceType), 2000);
+            
             // 觸發自定義事件，通知其他腳本
             window.dispatchEvent(new CustomEvent('cssLoaded', {
                 detail: { deviceType }
@@ -203,12 +263,25 @@
         } catch (error) {
             console.error('❌ CSS載入過程中發生錯誤:', error);
             
-            // 載入失敗時的fallback處理
-            alert('樣式載入失敗，請刷新頁面重試');
+            // 載入失敗時的fallback處理 - 加載桌面版CSS作為後備
+            console.warn('⚠️ 嘗試載入桌面版CSS作為後備方案');
+            try {
+                const fallbackPaths = CONFIG.CSS_PATHS.desktop;
+                const fallbackPromises = Object.entries(fallbackPaths).map(([name, path]) => {
+                    const id = `css-fallback-${name}`;
+                    return loadStylesheet(path, id);
+                });
+                await Promise.all(fallbackPromises);
+                currentDeviceType = 'desktop';
+                console.log('✅ 後備CSS載入完成');
+            } catch (fallbackError) {
+                console.error('❌ 後備CSS載入也失敗:', fallbackError);
+                alert('樣式載入失敗，請刷新頁面重試');
+            }
             
         } finally {
             isLoading = false;
-            hideLoadingIndicator();
+            // hideLoadingIndicator(); // 暫時移除載入指示器避免黑屏
         }
     }
     
