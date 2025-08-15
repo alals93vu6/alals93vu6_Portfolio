@@ -22,16 +22,13 @@
 body {
     margin: 0;
     padding: 0;
-    
-    /* 背景圖片設置 - 手機版優化 */
-    background-image: url("../../../Assets/image/index/HeroPage_BackGroundA_Mobile.png");
-    background-repeat: no-repeat;
-    background-size: cover;           /* 覆蓋整個視窗 */
-    background-position: center center; /* 手機版專用圖片，居中顯示 */
-    background-attachment: fixed;     /* 固定背景，與桌面版一致 */
     background-color: black;          /* 背景色作為fallback */
-    
     overflow-x: hidden; /* 隱藏水平滾動條 */
+    
+    /* 防止iOS Safari自動縮放 */
+    touch-action: pan-y;              /* 只允許垂直滾動 */
+    -webkit-text-size-adjust: 100%;   /* 防止文字自動縮放 */
+    -webkit-overflow-scrolling: touch; /* iOS平滑滾動 */
 }
 
 /* ====== Hero主容器 ====== */
@@ -64,6 +61,10 @@ body {
    - 使用Flexbox實現垂直分配
 */
 .hero-wrapper {
+    /* 背景容器設置 */
+    position: relative;
+    overflow: hidden;
+    
     /* Flexbox 垂直佈局 */
     display: flex;
     flex-direction: column;   /* 垂直排列 */
@@ -76,29 +77,38 @@ body {
     padding: 0 1rem;          /* 左右邊距 */
     box-sizing: border-box;
     
-    /* 垂直分配比例:
-       - 上半部 (背景展示): 55%
-       - 下半部 (文字內容): 45% */
+    /* 文字內容靠底部顯示，減少對背景圖片的遮擋 */
     justify-content: flex-end; /* 內容靠底部對齊 */
 }
 
-/* Hero背景展示區域 (虛擬元素) */
+/* Hero背景圖片 (使用偽元素避免iOS Safari問題) */
+.hero-wrapper {
+    --bg-image: url("../../../Assets/image/index/HeroPage_BackGroundA_Mobile.png");
+}
+
 .hero-wrapper::before {
-    content: '';
-    flex: 1.2;               /* 佔據較大比例 (約55%) */
-    min-height: 200px;       /* 最小高度確保背景可見 */
-    /* 這個區域主要給背景圖片使用，不放置內容 */
+    content: "";
+    position: absolute;
+    inset: 0;               /* 等同於 top: 0; right: 0; bottom: 0; left: 0; */
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 0;             /* 放在最底層 */
 }
 
 /* ====== Hero文字內容區域 ====== */
 .hero-text {
+    /* 定位設置 */
+    position: relative;       /* 讓 z-index 生效 */
+    z-index: 10;             /* 確保在背景圖片之上 */
+    
     /* Flexbox 設置 */
-    flex: 1;                 /* 佔據剩餘空間 (約45%) */
+    flex: 0 0 auto;          /* 不自動伸縮，使用內容高度 */
     
     /* 文字樣式 */
     color: white;
     text-align: center;       /* 手機版文字居中 */
-    z-index: 10;             /* 確保在背景遮罩之上 */
     
     /* 背景遮罩提升可讀性 - 加深20%讓文字更明顯 */
     background: linear-gradient(

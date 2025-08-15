@@ -16,6 +16,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;        /* 最小高度為一個完整螢幕，防止縫隙 */
+  height: 100vh;            /* 確保高度穩定 */
   padding: 0;               /* 移除所有內距，使用全螢幕背景 */
   
   /* 手機版背景設置 */
@@ -25,6 +26,11 @@
   display: flex;
   justify-content: center;  /* 水平居中 */
   align-items: center;      /* 垂直居中 */
+  
+  /* 防止手機瀏覽器縮放和手勢干擾 */
+  touch-action: pan-y;      /* 只允許垂直滾動 */
+  -webkit-overflow-scrolling: touch; /* iOS平滑滾動 */
+  overflow: hidden;         /* 防止意外溢出 */
 }
 
 /* ====== 雷達圖容器 - 手機版隱藏 ====== */
@@ -35,9 +41,11 @@
   /* 手機版尺寸設置 - 與PC版邏輯一致 */
   position: relative;
   
-  /* 手機版尺寸設置 */
-  width: 100%;               /* 充滿父容器寬度 */
-  height: 100%;              /* 充滿父容器高度 */
+  /* 手機版尺寸設置 - 根據螢幕空間動態調整 */
+  width: min(80vw, 80vh, 350px);    /* 取螢幕寬度80%、高度80%、350px中的最小值 */
+  height: min(80vw, 80vh, 350px);   /* 保持正方形，確保不超出螢幕範圍 */
+  max-width: 350px;
+  max-height: 350px;
   
   /* 確保容器居中 */
   margin: 0 auto;
@@ -63,12 +71,12 @@
   transition: all 0.3s ease;
 }
 
-/* 雷達圖容器觸控效果 */
+/* 手機版移除觸控效果避免滾動衝突 */
 .profile-container:hover {
-  transform: scale(1.02);    /* 輕微放大 */
+  transform: none;           /* 手機版禁用hover變換 */
   box-shadow: 
-    0 0 30px rgba(255, 255, 255, 0.15),
-    inset 0 0 25px rgba(0, 0, 0, 0.3);
+    0 0 20px rgba(255, 255, 255, 0.1),
+    inset 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 /* ====== 雷達圖底層 - 手機版 ====== */
@@ -85,10 +93,14 @@
   background-position: center;
   background-image: url("../../../Assets/image/index/profileSectionA_Mobile.png");
   
-  /* 載入動畫設置 - 與PC版一致 */
+  /* 載入動畫設置 - 手機版穩定化 */
   opacity: 0;              /* 初始透明 */
   transform: translateY(15%); /* 初始位置向下偏移15% */
   transition: transform 0.8s ease, opacity 0.6s ease; /* 動畫過渡效果 */
+  
+  /* 防止滾動時位移 */
+  will-change: opacity, transform; /* 優化動畫性能 */
+  backface-visibility: hidden;     /* 防止渲染閃爍 */
 }
 
 /* ====== 雷達圖填充層 - 手機版 ====== */
@@ -105,9 +117,13 @@
   background-position: center;
   background-image: url("../../../Assets/image/index/profileSectionB_Mobile.png");
   
-  /* 載入動畫設置 - 與PC版一致 */
+  /* 載入動畫設置 - 手機版穩定化 */
   opacity: 0;              /* 初始透明 */
   /* 填充層不需要位移動畫，只有透明度變化 */
+  
+  /* 防止滾動時位移 */
+  will-change: opacity;            /* 優化動畫性能 */
+  backface-visibility: hidden;     /* 防止渲染閃爍 */
 }
 
 /* ====== Canvas 雷達圖元素 - 手機版隱藏 ====== */
