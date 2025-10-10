@@ -48,8 +48,8 @@ function HeroPageDetected() {
         pageNumber++;
         // 根據設備類型選擇B圖片
         const bgImageB = isMobile 
-            ? "url('Assets/image/index/HeroPage_BackGroundB_Mobile.png')"
-            : "url('Assets/image/index/HeroPage_BackGroundB.png')";
+            ? "url('../../../../Assets/image/index/HeroPage_BackGroundB_Mobile.png')"
+            : "url('../../../../Assets/image/index/HeroPage_BackGroundB.png')";
         
         // 創建動態CSS規則來修改偽元素背景
         const style = document.getElementById('dynamic-bg-style') || document.createElement('style');
@@ -60,8 +60,8 @@ function HeroPageDetected() {
         pageNumber = 1;
         // 根據設備類型選擇A圖片
         const bgImageA = isMobile 
-            ? "url('Assets/image/index/HeroPage_BackGroundA_Mobile.png')"
-            : "url('Assets/image/index/HeroPage_BackGroundA.png')";
+            ? "url('../../../../Assets/image/index/HeroPage_BackGroundA_Mobile.png')"
+            : "url('../../../../Assets/image/index/HeroPage_BackGroundA.png')";
         
         // 創建動態CSS規則來修改偽元素背景
         const style = document.getElementById('dynamic-bg-style') || document.createElement('style');

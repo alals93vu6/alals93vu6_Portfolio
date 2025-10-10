@@ -26,12 +26,11 @@ body {
     padding-top: 60px;
     
     /* 背景圖片設置 - 桌面版使用fixed attachment獲得視差效果 */
-    background-image: url("../../../Assets/image/index/HeroPage_BackGroundA.png");
+    /*background-image: url("../../../Assets/image/index/HeroPage_BackGroundA.png");*/
     background-repeat: no-repeat;
     background-size: cover;           /* 覆蓋整個視窗 */
     background-position: right center; /* 背景圖片偏右置中 */
     background-attachment: fixed;     /* 固定背景創造視差滾動效果 */
-    background-color: black;          /* 背景色作為fallback */
     
     overflow-x: hidden; /* 隱藏水平滾動條 */
 }
@@ -214,3 +213,22 @@ body {
     opacity: 1;              /* 完全顯示 */
 }
 
+/* ====== 覆蓋：桌面偽元素背景承載與預設圖 ====== */
+/* 與手機版行為對齊，讓 JS 能以 .hero-wrapper::before 覆蓋背景圖 */
+.hero-wrapper {
+    position: relative; /* 讓偽元素以本容器為定位參考 */
+    --bg-image: url("../../../Assets/image/index/HeroPage_BackGroundA.png");
+}
+
+.hero-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0; /* 填滿整個 hero 區域 */
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* 滾動時背景固定，保留分層感 */
+    z-index: 0;
+    pointer-events: none;
+}
